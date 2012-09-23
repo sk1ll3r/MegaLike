@@ -1200,13 +1200,14 @@ containing a value of this type.
         public static final int abs__screen_action_bar_overlay=0x7f030011;
         public static final int abs__screen_simple=0x7f030012;
         public static final int abs__screen_simple_overlay_action_mode=0x7f030013;
-        public static final int fragment=0x7f030014;
-        public static final int gallery=0x7f030015;
-        public static final int login=0x7f030016;
-        public static final int main_gallery=0x7f030017;
-        public static final int search=0x7f030018;
-        public static final int sherlock_spinner_dropdown_item=0x7f030019;
-        public static final int sherlock_spinner_item=0x7f03001a;
+        public static final int collapsible_edittext=0x7f030014;
+        public static final int fragment=0x7f030015;
+        public static final int gallery=0x7f030016;
+        public static final int login=0x7f030017;
+        public static final int main_gallery=0x7f030018;
+        public static final int search=0x7f030019;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001a;
+        public static final int sherlock_spinner_item=0x7f03001b;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 

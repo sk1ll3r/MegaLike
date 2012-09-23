@@ -2,7 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- This is our main ActionBarSherlock theme -->
-    <style name="Theme.Styled" parent="Theme.Sherlock">
+    <style name="Theme.Styled" parent="Theme.Sherlock.ForceOverflow">
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
     </style>
 
