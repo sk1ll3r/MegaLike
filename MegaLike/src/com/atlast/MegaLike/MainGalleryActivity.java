@@ -1,15 +1,15 @@
 package com.atlast.MegaLike;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.viewpagerindicator.TabPageIndicator;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-public class MainGalleryActivity extends FragmentActivity {
+public class MainGalleryActivity extends SherlockFragmentActivity {
 	private static final String[] CONTENT = new String[] { "Tagged",
 			"Uploaded", "Starred", "Statuses" };
 
