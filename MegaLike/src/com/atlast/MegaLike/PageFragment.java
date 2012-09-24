@@ -35,23 +35,14 @@ public final class PageFragment extends Fragment {
 
 	public static PageFragment newInstance(String content) {
 		PageFragment fragment = new PageFragment();
-		fragment.options = new DisplayImageOptions.Builder().showStubImage(R.drawable.stub_image).showImageForEmptyUri(R.drawable.image_for_empty_url).cacheInMemory().cacheOnDisc().build();
-		
-//		String[] heavyImages = fragment.getActivity().getResources().getStringArray(R.array.heavy_images);
-//		String[] lightImages = fragment.getActivity().getResources().getStringArray(R.array.light_images);
-//
-//		fragment.imageUrls = new String[heavyImages.length + lightImages.length];
-//		List<String> urls = new ArrayList<String>();
-//		urls.addAll(Arrays.asList(heavyImages));
-//		urls.addAll(Arrays.asList(lightImages));
-//		fragment.imageUrls = (String[]) urls.toArray(new String[0]);
-
 		return fragment;
 	}
 
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
+		options = new DisplayImageOptions.Builder().showStubImage(R.drawable.stub_image).showImageForEmptyUri(R.drawable.image_for_empty_url).cacheInMemory().cacheOnDisc().build();
+
 		String[] heavyImages = getActivity().getResources().getStringArray(R.array.heavy_images);
 		String[] lightImages = getActivity().getResources().getStringArray(R.array.light_images);
 
@@ -60,16 +51,15 @@ public final class PageFragment extends Fragment {
 		urls.addAll(Arrays.asList(heavyImages));
 		urls.addAll(Arrays.asList(lightImages));
 		imageUrls = (String[]) urls.toArray(new String[0]);
-		
+
 		imageLoader = ImageLoader.getInstance();
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext())
-			.threadPoolSize(3)
-			.threadPriority(Thread.NORM_PRIORITY - 2)
-			.memoryCacheSize(1500000) // 1.5 Mb
-			.denyCacheImageMultipleSizesInMemory()
-			.discCacheFileNameGenerator(new Md5FileNameGenerator())
-			.enableLogging() // Not necessary in common
-			.build();
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext()).threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2).memoryCacheSize(1500000) // 1.5
+																																																			// Mb
+				.denyCacheImageMultipleSizesInMemory().discCacheFileNameGenerator(new Md5FileNameGenerator()).enableLogging() // Not
+																																// necessary
+																																// in
+																																// common
+				.build();
 		imageLoader.init(config);
 	}
 
@@ -90,7 +80,7 @@ public final class PageFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment, container, false);
+		View view = inflater.inflate(R.layout.pagefragment, container, false);
 		GridView gridView = (GridView) view.findViewById(R.id.gridview);
 		gridView.setAdapter(new ImageAdapter());
 		gridView.setOnItemClickListener(new OnItemClickListener() {
