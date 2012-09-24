@@ -3,6 +3,9 @@ package com.atlast.MegaLike;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.viewpagerindicator.TabPageIndicator;
 
 import android.os.Bundle;
@@ -14,7 +17,7 @@ import android.widget.Toast;
 
 public class MainGalleryActivity extends SherlockFragmentActivity {
 	private static final String[] CONTENT = new String[] { "Tagged", "Uploaded", "Starred", "Statuses" };
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add("Search").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);

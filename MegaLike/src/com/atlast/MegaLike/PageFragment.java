@@ -5,10 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.atlast.MegaLike.Lib.Extra;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -33,19 +36,41 @@ public final class PageFragment extends Fragment {
 	public static PageFragment newInstance(String content) {
 		PageFragment fragment = new PageFragment();
 		fragment.options = new DisplayImageOptions.Builder().showStubImage(R.drawable.stub_image).showImageForEmptyUri(R.drawable.image_for_empty_url).cacheInMemory().cacheOnDisc().build();
+		
+//		String[] heavyImages = fragment.getActivity().getResources().getStringArray(R.array.heavy_images);
+//		String[] lightImages = fragment.getActivity().getResources().getStringArray(R.array.light_images);
+//
+//		fragment.imageUrls = new String[heavyImages.length + lightImages.length];
+//		List<String> urls = new ArrayList<String>();
+//		urls.addAll(Arrays.asList(heavyImages));
+//		urls.addAll(Arrays.asList(lightImages));
+//		fragment.imageUrls = (String[]) urls.toArray(new String[0]);
 
-		String[] heavyImages = fragment.getActivity().getResources().getStringArray(R.array.heavy_images);
-		String[] lightImages = fragment.getActivity().getResources().getStringArray(R.array.light_images);
+		return fragment;
+	}
 
-		fragment.imageUrls = new String[heavyImages.length + lightImages.length];
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		String[] heavyImages = getActivity().getResources().getStringArray(R.array.heavy_images);
+		String[] lightImages = getActivity().getResources().getStringArray(R.array.light_images);
+
+		imageUrls = new String[heavyImages.length + lightImages.length];
 		List<String> urls = new ArrayList<String>();
 		urls.addAll(Arrays.asList(heavyImages));
 		urls.addAll(Arrays.asList(lightImages));
-		fragment.imageUrls = (String[]) urls.toArray(new String[0]);
-
-		fragment.imageLoader = ImageLoader.getInstance();
-
-		return fragment;
+		imageUrls = (String[]) urls.toArray(new String[0]);
+		
+		imageLoader = ImageLoader.getInstance();
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext())
+			.threadPoolSize(3)
+			.threadPriority(Thread.NORM_PRIORITY - 2)
+			.memoryCacheSize(1500000) // 1.5 Mb
+			.denyCacheImageMultipleSizesInMemory()
+			.discCacheFileNameGenerator(new Md5FileNameGenerator())
+			.enableLogging() // Not necessary in common
+			.build();
+		imageLoader.init(config);
 	}
 
 	@Override
