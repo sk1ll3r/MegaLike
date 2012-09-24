@@ -17,17 +17,16 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add("Search")
-			.setActionView(R.layout.collapsible_edittext)
-			.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-		menu.add("Login with different user").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.add("Search").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.add("About").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.add("Logout").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Toast.makeText(MainGalleryActivity.this, "Got click: " + item, Toast.LENGTH_SHORT).show();
-        return true;
+		return true;
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
