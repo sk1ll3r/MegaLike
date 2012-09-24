@@ -3,5 +3,6 @@
 
     <string name="app_name">Mega-Like</string>
     <string name="search_hint">Enter name of friend</string>
+    <string name="descr_image">Image</string>
 
 </resources>
