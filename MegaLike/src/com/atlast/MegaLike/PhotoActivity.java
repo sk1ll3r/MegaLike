@@ -12,7 +12,7 @@ import android.support.v4.view.ViewPager;
 public class PhotoActivity extends SherlockFragmentActivity {
 
 	private static int NUM_ITEMS;
-	private String[] imageUrls;
+	public String[] imageUrls;
 	private int pagerPosition;
 
 	MyAdapter mAdapter;

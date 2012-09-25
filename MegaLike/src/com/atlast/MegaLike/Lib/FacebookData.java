@@ -109,4 +109,18 @@ public class FacebookData {
 		return mData.getFriends(userID);
 	}
 
+	public String[] getPhotos(int index, int userID) {
+		switch (index) {
+		case 0:
+			return getPhotosAll(userID);
+		case 1:
+			return getPhotosTagged(userID);
+		case 2:
+			return getPhotosUploaded(userID);
+		case 3:
+			return getPhotosStarred(userID);
+		default:
+			return getPhotosAll(userID);
+		}
+	}
 }

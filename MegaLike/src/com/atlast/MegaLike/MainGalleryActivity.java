@@ -49,7 +49,7 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 
 		@Override
 		public Fragment getItem(int position) {
-			return PageFragment.newInstance(CONTENT[position % CONTENT.length]);
+			return PageFragment.newInstance(position % CONTENT.length);
 		}
 
 		@Override

@@ -1,9 +1,5 @@
 package com.atlast.MegaLike;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import com.atlast.MegaLike.Lib.Extra;
 import com.atlast.MegaLike.Lib.FacebookData;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -31,12 +27,14 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public final class PageFragment extends Fragment {
 	private static final String KEY_CONTENT = "TestFragment:Content";
+	private int TAB_INDEX;
 	private ImageLoader imageLoader;
 	private String[] imageUrls;
 	private DisplayImageOptions options;
 
-	public static PageFragment newInstance(String content) {
+	public static PageFragment newInstance(int tabIndex) {
 		PageFragment fragment = new PageFragment();
+		fragment.TAB_INDEX = tabIndex;
 		return fragment;
 	}
 
@@ -44,18 +42,20 @@ public final class PageFragment extends Fragment {
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		options = new DisplayImageOptions.Builder().showStubImage(R.drawable.stub_image).showImageForEmptyUri(R.drawable.image_for_empty_url).cacheInMemory().cacheOnDisc().build();
-		
+
 		FacebookData data = new FacebookData(activity);
-		imageUrls = data.getPhotosAll(1);
+		imageUrls = data.getPhotos(TAB_INDEX, Extra.TEST_USER_ID);
 
 		imageLoader = ImageLoader.getInstance();
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext()).threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2).memoryCacheSize(1500000) // 1.5
-																																																			// Mb
-				.denyCacheImageMultipleSizesInMemory().discCacheFileNameGenerator(new Md5FileNameGenerator()).enableLogging() // Not
-																																// necessary
-																																// in
-																																// common
-				.build();
+		// @formatter:off
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext())
+			.threadPoolSize(3)
+			.threadPriority(Thread.NORM_PRIORITY - 2)
+			.memoryCacheSize(1500000)
+			.denyCacheImageMultipleSizesInMemory()
+			.discCacheFileNameGenerator(new Md5FileNameGenerator())
+			.enableLogging().build();
+		// @formatter:on
 		imageLoader.init(config);
 	}
 

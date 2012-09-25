@@ -39,17 +39,19 @@ public class ImageFragment extends Fragment {
 		super.onAttach(activity);
 		options = new DisplayImageOptions.Builder().showStubImage(R.drawable.stub_image).showImageForEmptyUri(R.drawable.image_for_empty_url).cacheInMemory().cacheOnDisc().build();
 
-		FacebookData data = new FacebookData(activity);
-		imageUrls = data.getPhotosAll(1);
+		imageUrls = ((PhotoActivity) getActivity()).imageUrls;
 
 		imageLoader = ImageLoader.getInstance();
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext()).threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2).memoryCacheSize(1500000) // 1.5
-																																																			// Mb
-				.denyCacheImageMultipleSizesInMemory().discCacheFileNameGenerator(new Md5FileNameGenerator()).enableLogging() // Not
-																																// necessary
-																																// in
-																																// common
-				.build();
+		// @formatter:off
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext())
+			.threadPoolSize(3)
+			.threadPriority(Thread.NORM_PRIORITY - 2)
+			.memoryCacheSize(1500000)																																																			// Mb
+			.denyCacheImageMultipleSizesInMemory()
+			.discCacheFileNameGenerator(new Md5FileNameGenerator())
+			.enableLogging()
+			.build();
+		// @formatter:on
 		imageLoader.init(config);
 	}
 
