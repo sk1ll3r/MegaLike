@@ -130,9 +130,11 @@ public final class PageFragment extends Fragment {
 			imageLoader.displayImage(imageUrls[position], imageView, options, new SimpleImageLoadingListener() {
 				@Override
 				public void onLoadingComplete(Bitmap loadedImage) {
-					Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
-					imageView.setAnimation(anim);
-					anim.start();
+					if (getActivity() != null) {
+						Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
+						imageView.setAnimation(anim);
+						anim.start();
+					}
 				}
 			});
 

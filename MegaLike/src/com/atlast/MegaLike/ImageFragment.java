@@ -61,7 +61,7 @@ public class ImageFragment extends Fragment {
 				.build();
 		imageLoader.init(config);
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.imagefragment, container, false);
@@ -76,15 +76,15 @@ public class ImageFragment extends Fragment {
 			public void onLoadingFailed(FailReason failReason) {
 				String message = null;
 				switch (failReason) {
-					case IO_ERROR:
-						message = "Input/Output error";
-						break;
-					case OUT_OF_MEMORY:
-						message = "Out Of Memory error";
-						break;
-					case UNKNOWN:
-						message = "Unknown error";
-						break;
+				case IO_ERROR:
+					message = "Input/Output error";
+					break;
+				case OUT_OF_MEMORY:
+					message = "Out Of Memory error";
+					break;
+				case UNKNOWN:
+					message = "Unknown error";
+					break;
 				}
 				Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 
@@ -93,10 +93,12 @@ public class ImageFragment extends Fragment {
 			}
 
 			public void onLoadingComplete(Bitmap loadedImage) {
-				spinner.setVisibility(View.GONE);
-				Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
-				imageView.setAnimation(anim);
-				anim.start();
+				if (getActivity() != null) {
+					spinner.setVisibility(View.GONE);
+					Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
+					imageView.setAnimation(anim);
+					anim.start();
+				}
 			}
 
 			public void onLoadingCancelled() {
@@ -105,7 +107,7 @@ public class ImageFragment extends Fragment {
 		});
 		return view;
 	}
-	
+
 	@Override
 	public void onStop() {
 		super.onStop();
