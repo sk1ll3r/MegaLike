@@ -2,10 +2,8 @@ package com.atlast.MegaLike;
 
 import com.atlast.MegaLike.Lib.Extra;
 import com.atlast.MegaLike.Lib.FacebookData;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 import android.app.Activity;
@@ -46,16 +44,6 @@ public final class PageFragment extends Fragment {
 		imageUrls = data.getPhotos(TAB_INDEX, Extra.TEST_USER_ID);
 
 		imageLoader = ImageLoader.getInstance();
-		// @formatter:off
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext())
-			.threadPoolSize(3)
-			.threadPriority(Thread.NORM_PRIORITY - 2)
-			.memoryCacheSize(1500000)
-			.denyCacheImageMultipleSizesInMemory()
-			.discCacheFileNameGenerator(new Md5FileNameGenerator())
-			.enableLogging().build();
-		// @formatter:on
-		imageLoader.init(config);
 	}
 
 	@Override

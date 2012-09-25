@@ -1,9 +1,7 @@
 package com.atlast.MegaLike;
 
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 
@@ -47,16 +45,6 @@ public class ImageFragment extends Fragment {
 		imageUrls = ((PhotoActivity) getActivity()).imageUrls;
 
 		imageLoader = ImageLoader.getInstance();
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext())
-			.threadPoolSize(3)
-			.threadPriority(Thread.NORM_PRIORITY - 2)
-			.memoryCacheSize(1500000)																																																			// Mb
-			.denyCacheImageMultipleSizesInMemory()
-			.discCacheFileNameGenerator(new Md5FileNameGenerator())
-			.enableLogging()
-			.build();
-		// @formatter:on
-		imageLoader.init(config);
 	}
 
 	@Override
