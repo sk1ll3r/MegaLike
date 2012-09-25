@@ -13,8 +13,8 @@ import android.support.v4.view.ViewPager;
 import android.widget.Toast;
 
 public class MainGalleryActivity extends SherlockFragmentActivity {
-	private static final String[] CONTENT = new String[] { "Tagged", "Uploaded", "Starred", "Statuses" };
-	
+	private static final String[] CONTENT = new String[] { "All", "Tagged", "Uploaded", "Starred", "Statuses" };
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add("Search").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);

@@ -12,10 +12,27 @@ public final class R {
         public static final int fade_in=0x7f040000;
     }
     public static final class array {
-        public static final int heavy_images=0x7f0d0000;
-        /**  Wrong link 
-         */
-        public static final int light_images=0x7f0d0001;
+        public static final int fbdata_mato_all=0x7f0d000a;
+        public static final int fbdata_mato_starred=0x7f0d000d;
+        public static final int fbdata_mato_statuses=0x7f0d000e;
+        public static final int fbdata_mato_tagged=0x7f0d000b;
+        public static final int fbdata_mato_uploaded=0x7f0d000c;
+        public static final int fbdata_rasto_all=0x7f0d0005;
+        public static final int fbdata_rasto_starred=0x7f0d0008;
+        public static final int fbdata_rasto_statuses=0x7f0d0009;
+        public static final int fbdata_rasto_tagged=0x7f0d0006;
+        public static final int fbdata_rasto_uploaded=0x7f0d0007;
+        public static final int fbdata_shaan_all=0x7f0d000f;
+        public static final int fbdata_shaan_starred=0x7f0d0012;
+        public static final int fbdata_shaan_statuses=0x7f0d0013;
+        public static final int fbdata_shaan_tagged=0x7f0d0010;
+        public static final int fbdata_shaan_uploaded=0x7f0d0011;
+        public static final int fbdata_tuan_all=0x7f0d0000;
+        public static final int fbdata_tuan_starred=0x7f0d0003;
+        public static final int fbdata_tuan_statuses=0x7f0d0004;
+        public static final int fbdata_tuan_tagged=0x7f0d0001;
+        public static final int fbdata_tuan_uploaded=0x7f0d0002;
+        public static final int light_images=0x7f0d0014;
     }
     public static final class attr {
         /**  Specified if we are forcing an action item overflow menu. 

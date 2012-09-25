@@ -1,9 +1,6 @@
 package com.atlast.MegaLike;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import com.atlast.MegaLike.Lib.FacebookData;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -42,14 +39,8 @@ public class ImageFragment extends Fragment {
 		super.onAttach(activity);
 		options = new DisplayImageOptions.Builder().showStubImage(R.drawable.stub_image).showImageForEmptyUri(R.drawable.image_for_empty_url).cacheInMemory().cacheOnDisc().build();
 
-		String[] heavyImages = getActivity().getResources().getStringArray(R.array.heavy_images);
-		String[] lightImages = getActivity().getResources().getStringArray(R.array.light_images);
-
-		imageUrls = new String[heavyImages.length + lightImages.length];
-		List<String> urls = new ArrayList<String>();
-		urls.addAll(Arrays.asList(heavyImages));
-		urls.addAll(Arrays.asList(lightImages));
-		imageUrls = (String[]) urls.toArray(new String[0]);
+		FacebookData data = new FacebookData(activity);
+		imageUrls = data.getPhotosAll(1);
 
 		imageLoader = ImageLoader.getInstance();
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext()).threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2).memoryCacheSize(1500000) // 1.5
