@@ -31,14 +31,14 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_gallery);
+		setContentView(R.layout.maingallery);
 
 		FragmentPagerAdapter adapter = new MegalikeAdapter(getSupportFragmentManager());
 
-		ViewPager pager = (ViewPager) findViewById(R.id.pager);
+		ViewPager pager = (ViewPager) findViewById(R.id.maingallery_pager);
 		pager.setAdapter(adapter);
 
-		TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
+		TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.maingallery_indicator);
 		indicator.setViewPager(pager);
 	}
 

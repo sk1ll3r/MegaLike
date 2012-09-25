@@ -1132,17 +1132,16 @@ containing a value of this type.
         public static final int abs__tab_selected_holo=0x7f020052;
         public static final int abs__tab_selected_pressed_holo=0x7f020053;
         public static final int abs__tab_unselected_pressed_holo=0x7f020054;
-        public static final int ic_launcher=0x7f020055;
-        public static final int image_for_empty_url=0x7f020056;
-        public static final int logo=0x7f020057;
-        public static final int stub_image=0x7f020058;
-        public static final int vpi__tab_indicator=0x7f020059;
-        public static final int vpi__tab_selected_focused_holo=0x7f02005a;
-        public static final int vpi__tab_selected_holo=0x7f02005b;
-        public static final int vpi__tab_selected_pressed_holo=0x7f02005c;
-        public static final int vpi__tab_unselected_focused_holo=0x7f02005d;
-        public static final int vpi__tab_unselected_holo=0x7f02005e;
-        public static final int vpi__tab_unselected_pressed_holo=0x7f02005f;
+        public static final int image_for_empty_url=0x7f020055;
+        public static final int logo=0x7f020056;
+        public static final int stub_image=0x7f020057;
+        public static final int vpi__tab_indicator=0x7f020058;
+        public static final int vpi__tab_selected_focused_holo=0x7f020059;
+        public static final int vpi__tab_selected_holo=0x7f02005a;
+        public static final int vpi__tab_selected_pressed_holo=0x7f02005b;
+        public static final int vpi__tab_unselected_focused_holo=0x7f02005c;
+        public static final int vpi__tab_unselected_holo=0x7f02005d;
+        public static final int vpi__tab_unselected_pressed_holo=0x7f02005e;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f060027;
@@ -1175,25 +1174,24 @@ containing a value of this type.
         public static final int abs__titleDivider=0x7f060021;
         public static final int abs__up=0x7f06000b;
         public static final int bottom=0x7f060013;
-        public static final int btn_search=0x7f06003a;
+        public static final int btn_search=0x7f060038;
         public static final int disableHome=0x7f060009;
-        public static final int et_search_value=0x7f060039;
-        public static final int gridview=0x7f06002d;
+        public static final int et_search_value=0x7f060037;
         public static final int homeAsUp=0x7f060006;
-        public static final int image=0x7f060032;
-        public static final int imagefragment_image=0x7f060030;
-        public static final int imagefragment_loading=0x7f060031;
-        public static final int indicator=0x7f060037;
-        public static final int layoutview=0x7f06002c;
+        public static final int imagefragment_image=0x7f06002c;
+        public static final int imagefragment_loading=0x7f06002d;
         public static final int listMode=0x7f060002;
-        public static final int loading=0x7f060033;
-        public static final int login_email=0x7f060034;
-        public static final int login_login_btn=0x7f060036;
-        public static final int login_password=0x7f060035;
+        public static final int login_email=0x7f06002e;
+        public static final int login_login_btn=0x7f060030;
+        public static final int login_password=0x7f06002f;
+        public static final int maingallery_indicator=0x7f060031;
+        public static final int maingallery_pager=0x7f060032;
         public static final int none=0x7f060010;
         public static final int normal=0x7f060001;
-        public static final int pager=0x7f06002e;
-        public static final int photoactivity_pager=0x7f060038;
+        public static final int pagefragment_gridimage_image=0x7f060035;
+        public static final int pagefragment_gridview=0x7f060034;
+        public static final int pagefragment_layoutview=0x7f060033;
+        public static final int photoactivity_pager=0x7f060036;
         public static final int showCustom=0x7f060008;
         public static final int showHome=0x7f060005;
         public static final int showTitle=0x7f060007;
@@ -1202,7 +1200,6 @@ containing a value of this type.
         public static final int triangle=0x7f060011;
         public static final int underline=0x7f060012;
         public static final int useLogo=0x7f060004;
-        public static final int viewpager=0x7f06002f;
         public static final int wrap_content=0x7f060000;
     }
     public static final class integer {
@@ -1234,20 +1231,15 @@ containing a value of this type.
         public static final int abs__screen_action_bar_overlay=0x7f030011;
         public static final int abs__screen_simple=0x7f030012;
         public static final int abs__screen_simple_overlay_action_mode=0x7f030013;
-        public static final int ac_image_grid=0x7f030014;
-        public static final int ac_image_pager=0x7f030015;
-        public static final int collapsible_edittext=0x7f030016;
-        public static final int gallery=0x7f030017;
-        public static final int imagefragment=0x7f030018;
-        public static final int item_grid_image=0x7f030019;
-        public static final int item_pager_image=0x7f03001a;
-        public static final int login=0x7f03001b;
-        public static final int main_gallery=0x7f03001c;
-        public static final int pagefragment=0x7f03001d;
-        public static final int photoactivity_fragment_pager=0x7f03001e;
-        public static final int search=0x7f03001f;
-        public static final int sherlock_spinner_dropdown_item=0x7f030020;
-        public static final int sherlock_spinner_item=0x7f030021;
+        public static final int imagefragment=0x7f030014;
+        public static final int login=0x7f030015;
+        public static final int maingallery=0x7f030016;
+        public static final int pagefragment=0x7f030017;
+        public static final int pagefragment_gridimage=0x7f030018;
+        public static final int photoactivity=0x7f030019;
+        public static final int search=0x7f03001a;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001b;
+        public static final int sherlock_spinner_item=0x7f03001c;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 

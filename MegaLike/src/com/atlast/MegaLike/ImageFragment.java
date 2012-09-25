@@ -1,6 +1,5 @@
 package com.atlast.MegaLike;
 
-import com.atlast.MegaLike.Lib.FacebookData;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -37,12 +36,17 @@ public class ImageFragment extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		options = new DisplayImageOptions.Builder().showStubImage(R.drawable.stub_image).showImageForEmptyUri(R.drawable.image_for_empty_url).cacheInMemory().cacheOnDisc().build();
+		// @formatter:off
+		options = new DisplayImageOptions.Builder()
+			.showStubImage(R.drawable.stub_image)
+			.showImageForEmptyUri(R.drawable.image_for_empty_url)
+			.cacheInMemory()
+			.cacheOnDisc()
+			.build();
 
 		imageUrls = ((PhotoActivity) getActivity()).imageUrls;
 
 		imageLoader = ImageLoader.getInstance();
-		// @formatter:off
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext())
 			.threadPoolSize(3)
 			.threadPriority(Thread.NORM_PRIORITY - 2)

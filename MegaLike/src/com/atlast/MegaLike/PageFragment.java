@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,31 +69,24 @@ public final class PageFragment extends Fragment {
 
 	@Override
 	public void onStop() {
-		super.onStop();
 		imageLoader.stop();
-		Log.d("DEBUG", "PageFragment.onStop()");
-	}
-
-	@Override
-	public void onDetach() {
-		super.onDetach();
-		Log.d("DEBUG", "PageFragment.onDetach()");
+		super.onStop();
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.pagefragment, container, false);
-		GridView gridView = (GridView) view.findViewById(R.id.gridview);
+		GridView gridView = (GridView) view.findViewById(R.id.pagefragment_gridview);
 		gridView.setAdapter(new ImageAdapter());
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				startImageGalleryActivity(position);
+				startPhotoActivity(position);
 			}
 		});
 		return view;
 	}
 
-	private void startImageGalleryActivity(int position) {
+	private void startPhotoActivity(int position) {
 		Intent intent = new Intent(getActivity(), PhotoActivity.class);
 		intent.putExtra(Extra.IMAGES, imageUrls);
 		intent.putExtra(Extra.IMAGE_POSITION, position);
@@ -117,7 +109,7 @@ public final class PageFragment extends Fragment {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			final ImageView imageView;
 			if (convertView == null) {
-				imageView = (ImageView) getActivity().getLayoutInflater().inflate(R.layout.item_grid_image, parent, false);
+				imageView = (ImageView) getActivity().getLayoutInflater().inflate(R.layout.pagefragment_gridimage, parent, false);
 			} else {
 				imageView = (ImageView) convertView;
 			}

@@ -22,7 +22,7 @@ public class PhotoActivity extends SherlockFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(Extra.THEME); // Used for theme switching in samples
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.photoactivity_fragment_pager);
+		setContentView(R.layout.photoactivity);
 
 		Bundle bundle = getIntent().getExtras();
 		imageUrls = bundle.getStringArray(Extra.IMAGES);
