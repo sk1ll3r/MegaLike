@@ -1174,9 +1174,7 @@ containing a value of this type.
         public static final int abs__titleDivider=0x7f060021;
         public static final int abs__up=0x7f06000b;
         public static final int bottom=0x7f060013;
-        public static final int btn_search=0x7f060038;
         public static final int disableHome=0x7f060009;
-        public static final int et_search_value=0x7f060037;
         public static final int homeAsUp=0x7f060006;
         public static final int imagefragment_image=0x7f06002c;
         public static final int imagefragment_loading=0x7f06002d;
@@ -1192,6 +1190,8 @@ containing a value of this type.
         public static final int pagefragment_gridview=0x7f060034;
         public static final int pagefragment_layoutview=0x7f060033;
         public static final int photoactivity_pager=0x7f060036;
+        public static final int searchable_list=0x7f060038;
+        public static final int searchable_textField=0x7f060037;
         public static final int showCustom=0x7f060008;
         public static final int showHome=0x7f060005;
         public static final int showTitle=0x7f060007;
@@ -1237,7 +1237,7 @@ containing a value of this type.
         public static final int pagefragment=0x7f030017;
         public static final int pagefragment_gridimage=0x7f030018;
         public static final int photoactivity=0x7f030019;
-        public static final int search=0x7f03001a;
+        public static final int searchable=0x7f03001a;
         public static final int sherlock_spinner_dropdown_item=0x7f03001b;
         public static final int sherlock_spinner_item=0x7f03001c;
     }
@@ -1275,6 +1275,7 @@ containing a value of this type.
         public static final int app_name=0x7f0b000a;
         public static final int descr_image=0x7f0b000c;
         public static final int search_hint=0x7f0b000b;
+        public static final int search_instructions=0x7f0b000d;
     }
     public static final class style {
         public static final int DialogWindowTitle_Sherlock=0x7f0c0033;

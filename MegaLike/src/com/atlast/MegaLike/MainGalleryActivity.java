@@ -25,7 +25,9 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Toast.makeText(MainGalleryActivity.this, "Got click: " + item, Toast.LENGTH_SHORT).show();
+		Toast.makeText(MainGalleryActivity.this, "Got click: " + item, Toast.LENGTH_SHORT).show(); // To be removed
+		if(item.getTitle().equals("Search"))
+			onSearchRequested();
 		return true;
 	}
 
