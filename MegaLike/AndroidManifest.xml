@@ -61,7 +61,7 @@
 
         <!-- Provides search suggestions for friends. -->
         <provider
-            android:name="SearchSuggestionProvider"
+            android:name=".SearchSuggestionProvider"
             android:authorities="com.atlast.MegaLike.SearchSuggestionProvider"
             android:syncable="false" />
     </application>
