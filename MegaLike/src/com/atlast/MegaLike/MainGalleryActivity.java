@@ -3,6 +3,7 @@ package com.atlast.MegaLike;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.atlast.MegaLike.Lib.Extra;
 import com.viewpagerindicator.TabPageIndicator;
 
 import android.os.Bundle;
@@ -14,6 +15,17 @@ import android.widget.Toast;
 
 public class MainGalleryActivity extends SherlockFragmentActivity {
 	private static final String[] CONTENT = new String[] { "All", "Tagged", "Uploaded", "Starred", "Statuses" };
+	private int currentUserId;
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		currentUserId = loadCurrentUserId();
+	}
+
+	private int loadCurrentUserId() {
+		return Extra.CURRENT_USER_ID;
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

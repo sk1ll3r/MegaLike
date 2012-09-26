@@ -3,24 +3,39 @@ package com.atlast.MegaLike;
 import java.util.Arrays;
 import java.util.Collections;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockListActivity;
+import com.atlast.MegaLike.Lib.Extra;
 
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class SearchableActivity extends SherlockActivity {
-	private ListView mList;
+public class SearchableActivity extends SherlockListActivity {
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		String item = (String) getListAdapter().getItem(position);
+		if (item.equals("Rasto")) {
+			saveCurrentUserId(2);
+		} else if (item.equals("Mato")) {
+			saveCurrentUserId(3);
+		} else if (item.equals("Shaan")) {
+			saveCurrentUserId(4);
+		} else {
+			saveCurrentUserId(1);
+		}
+		finish();
+	}
+
+	private void saveCurrentUserId(int id) {
+		Extra.CURRENT_USER_ID = id;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.searchable);
-
-		mList = (ListView) findViewById(R.id.searchable_list);
-
 		handleIntent(getIntent());
 	}
 
@@ -41,7 +56,6 @@ public class SearchableActivity extends SherlockActivity {
 		String[] values = new String[] { "Tuan", "Rasto", "Mato", "Shaan", "WebOS", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2" };
 		Collections.shuffle(Arrays.asList(values));
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, values);
-		mList.setAdapter(adapter);
-		// Implement this later mList.setOnItemClickListener(adapter);
+		setListAdapter(adapter);
 	}
 }

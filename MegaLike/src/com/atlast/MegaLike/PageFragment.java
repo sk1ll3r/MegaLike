@@ -23,11 +23,13 @@ import android.widget.ImageView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public final class PageFragment extends Fragment {
+
 	private static final String KEY_CONTENT = "TestFragment:Content";
 	private int TAB_INDEX;
 	private ImageLoader imageLoader;
 	private String[] imageUrls;
 	private DisplayImageOptions options;
+	private FacebookData data;
 
 	public static PageFragment newInstance(int tabIndex) {
 		PageFragment fragment = new PageFragment();
@@ -36,12 +38,21 @@ public final class PageFragment extends Fragment {
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		imageUrls = data.getPhotos(TAB_INDEX, loadCurrentUserId());
+	}
+
+	private int loadCurrentUserId() {
+		return Extra.CURRENT_USER_ID;
+	}
+
+	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		options = new DisplayImageOptions.Builder().showStubImage(R.drawable.stub_image).showImageForEmptyUri(R.drawable.image_for_empty_url).cacheInMemory().cacheOnDisc().build();
-
-		FacebookData data = new FacebookData(activity);
-		imageUrls = data.getPhotos(TAB_INDEX, Extra.TEST_USER_ID);
+		data = new FacebookData(activity);
+		imageUrls = data.getPhotos(TAB_INDEX, loadCurrentUserId());
 
 		imageLoader = ImageLoader.getInstance();
 	}
