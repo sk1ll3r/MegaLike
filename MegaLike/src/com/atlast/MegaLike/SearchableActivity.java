@@ -27,11 +27,11 @@ public class SearchableActivity extends SherlockListActivity {
 	}
 	
 	private void saveCurrentUserId(String data) {
-		if (data.equals("Rasto")) {
+		if (data.equals("rasto")) {
 			saveCurrentUserId(2);
-		} else if (data.equals("Mato")) {
+		} else if (data.equals("mato")) {
 			saveCurrentUserId(3);
-		} else if (data.equals("Shaan")) {
+		} else if (data.equals("shaan")) {
 			saveCurrentUserId(4);
 		} else {
 			saveCurrentUserId(1);
