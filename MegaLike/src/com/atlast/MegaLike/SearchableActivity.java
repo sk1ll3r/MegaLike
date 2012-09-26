@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import com.actionbarsherlock.app.SherlockListActivity;
 import com.atlast.MegaLike.Lib.Extra;
+import com.atlast.MegaLike.Lib.FacebookData;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -17,20 +18,24 @@ public class SearchableActivity extends SherlockListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		String item = (String) getListAdapter().getItem(position);
-		if (item.equals("Rasto")) {
-			saveCurrentUserId(2);
-		} else if (item.equals("Mato")) {
-			saveCurrentUserId(3);
-		} else if (item.equals("Shaan")) {
-			saveCurrentUserId(4);
-		} else {
-			saveCurrentUserId(1);
-		}
+		saveCurrentUserId(item);
 		finish();
 	}
 
 	private void saveCurrentUserId(int id) {
 		Extra.CURRENT_USER_ID = id;
+	}
+	
+	private void saveCurrentUserId(String data) {
+		if (data.equals("Rasto")) {
+			saveCurrentUserId(2);
+		} else if (data.equals("Mato")) {
+			saveCurrentUserId(3);
+		} else if (data.equals("Shaan")) {
+			saveCurrentUserId(4);
+		} else {
+			saveCurrentUserId(1);
+		}
 	}
 
 	@Override
@@ -49,13 +54,18 @@ public class SearchableActivity extends SherlockListActivity {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			String query = intent.getStringExtra(SearchManager.QUERY);
 			doMySearch(query);
+		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+			// Handle a suggestions click (because the suggestions all use ACTION_VIEW
+			String data = intent.getDataString();
+			saveCurrentUserId(data);
+			finish();
 		}
 	}
 
 	private void doMySearch(String query) {
 		String[] values = new String[] { "Tuan", "Rasto", "Mato", "Shaan", "WebOS", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2" };
 		Collections.shuffle(Arrays.asList(values));
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, values);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, FacebookData.getInstance().getMatches(query));
 		setListAdapter(adapter);
 	}
 }

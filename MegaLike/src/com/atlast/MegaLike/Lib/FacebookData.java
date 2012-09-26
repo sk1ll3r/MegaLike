@@ -1,9 +1,12 @@
 package com.atlast.MegaLike.Lib;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 import android.content.Context;
 
@@ -12,6 +15,9 @@ import com.atlast.MegaLike.R;
 public class FacebookData {
 	String[] tuanAll, tuanTagged, tuanUploaded, tuanStarred, rastoAll, rastoTagged, rastoUploaded, rastoStarred, matoAll, matoTagged, matoUploaded, matoStarred, shaanAll, shaanTagged, shaanUploaded, shaanStarred;
 
+	private final Map<String, List<String>> mSearchSuggestionsDict = new ConcurrentHashMap<String, List<String>>();
+
+	// TODO remove in real version
 	private static final FacebookData sInstance = new FacebookData(UILApplication.getAppContext());
 
 	public static FacebookData getInstance() {
@@ -40,7 +46,37 @@ public class FacebookData {
 		shaanTagged = concat(context.getResources().getStringArray(R.array.fbdata_shaan_tagged), lightImages);
 		shaanUploaded = concat(context.getResources().getStringArray(R.array.fbdata_shaan_uploaded), lightImages);
 		shaanStarred = concat(context.getResources().getStringArray(R.array.fbdata_shaan_starred), lightImages);
+
+		loadFriends();
 	}
+
+	private void loadFriends() {
+		String[] values = new String[] { "Tuan", "Rasto", "Mato", "Shaan", "WebOS", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2" };
+		for (String friend : values)
+			addFriend(friend.toLowerCase());
+	}
+
+	private void addFriend(String friend) {
+		int len = friend.length();
+		for (int i = 0; i < len; i++) {
+			String prefix = friend.substring(0, len - i);
+			addMatch(prefix, friend);
+		}
+	}
+
+	private void addMatch(String query, String friend) {
+		List<String> matches = mSearchSuggestionsDict.get(query);
+		if (matches == null) {
+			matches = new ArrayList<String>();
+			mSearchSuggestionsDict.put(query, matches);
+		}
+		matches.add(friend);
+	}
+	
+	public List<String> getMatches(String query) {
+        List<String> list = mSearchSuggestionsDict.get(query);
+        return list == null ? Collections.EMPTY_LIST : list;
+    }
 
 	private static <T> T[] concat(T[] first, T[] second) {
 		T[] result = Arrays.copyOf(first, first.length + second.length);
@@ -130,10 +166,5 @@ public class FacebookData {
 		default:
 			return getPhotosAll(userID);
 		}
-	}
-
-	public List<String> getMatches(String processedQuery) {
-		List<String> list = mDict.get(query);
-        return list == null ? Collections.EMPTY_LIST : list;
 	}
 }

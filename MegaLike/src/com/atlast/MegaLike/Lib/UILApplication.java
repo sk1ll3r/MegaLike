@@ -30,6 +30,6 @@ public class UILApplication extends Application {
 	}
 
 	public static Context getAppContext() {
-		return MyApplication.context;
+		return UILApplication.context;
 	}
 }
