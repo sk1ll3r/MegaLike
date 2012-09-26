@@ -1,12 +1,14 @@
 package com.atlast.MegaLike.Lib;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class UILApplication extends Application {
+	private static Context context; // only temporary
 
 	@Override
 	public void onCreate() {
@@ -24,5 +26,10 @@ public class UILApplication extends Application {
 		//@formatter:on
 		// Initialize ImageLoader with configuration.
 		ImageLoader.getInstance().init(config);
+		UILApplication.context = getApplicationContext();
+	}
+
+	public static Context getAppContext() {
+		return MyApplication.context;
 	}
 }

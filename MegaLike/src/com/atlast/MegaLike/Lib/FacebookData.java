@@ -1,6 +1,8 @@
 package com.atlast.MegaLike.Lib;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Vector;
 
 import android.content.Context;
@@ -9,6 +11,12 @@ import com.atlast.MegaLike.R;
 
 public class FacebookData {
 	String[] tuanAll, tuanTagged, tuanUploaded, tuanStarred, rastoAll, rastoTagged, rastoUploaded, rastoStarred, matoAll, matoTagged, matoUploaded, matoStarred, shaanAll, shaanTagged, shaanUploaded, shaanStarred;
+
+	private static final FacebookData sInstance = new FacebookData(UILApplication.getAppContext());
+
+	public static FacebookData getInstance() {
+		return sInstance;
+	}
 
 	public FacebookData(Context context) {
 		String[] lightImages = context.getResources().getStringArray(R.array.light_images);
@@ -122,5 +130,10 @@ public class FacebookData {
 		default:
 			return getPhotosAll(userID);
 		}
+	}
+
+	public List<String> getMatches(String processedQuery) {
+		List<String> list = mDict.get(query);
+        return list == null ? Collections.EMPTY_LIST : list;
 	}
 }
