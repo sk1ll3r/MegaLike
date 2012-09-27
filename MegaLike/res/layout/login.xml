@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dip"
         android:background="@drawable/image_fblogin"
+        android:onClick="startLogin"
         />
 
 </LinearLayout>
