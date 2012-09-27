@@ -29,7 +29,6 @@ public class Link implements Comparable<Link> {
 		likes = 0;
 	}
 	
-	@Override
 	public int compareTo(Link other) {
 		if (likes == other.likes) return linkId.compareTo(other.linkId);
 		if (likes > other.likes) return -1;

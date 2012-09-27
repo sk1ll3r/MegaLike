@@ -20,7 +20,6 @@ public class Photo implements Comparable<Photo>{
 		this.link = link;
 	}
 
-	@Override
 	public int compareTo(Photo other) {
 		if (likes == other.likes) return pid.compareTo(other.pid);
 		if (likes > other.likes) return -1;
