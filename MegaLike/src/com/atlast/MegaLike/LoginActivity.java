@@ -11,7 +11,8 @@ import com.facebook.android.Facebook.*;
 
 public class LoginActivity extends Activity {
 
-	Facebook facebook = new Facebook("367951253282551");
+	private Facebook facebook = new Facebook("367951253282551");
+	private String[] PERMISSIONS = new String[] {"user_photos" ,"friends_photos" ,"publish_stream" ,"read_stream" ,"friends_status" ,"user_status"};
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -21,7 +22,7 @@ public class LoginActivity extends Activity {
 
 	public void startLogin(View view) {
 		view.setBackgroundResource(R.drawable.image_fblogin_hover);
-		facebook.authorize(this, new DialogListener() {
+		facebook.authorize(this, PERMISSIONS, new DialogListener() {
 			public void onComplete(Bundle values) {
 				startMainGalleryActivity();
 			}
