@@ -13,32 +13,11 @@
         android:src="@drawable/logo" 
         android:layout_margin="5dip"
         />
-
-    <EditText
-        android:id="@+id/login_email"
+    
+    <com.facebook.android.LoginButton
+        android:id="@+id/login_loginbutton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress" 
-        android:layout_margin="5dip"
-        android:hint="Email or Phone">
-
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/login_password"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword" 
-        android:layout_margin="5dip"
-        android:hint="Password"/>
-
-    <Button
-        android:id="@+id/login_login_btn"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Login with Facebook" 
-        android:onClick="startSearchActivity"
         android:layout_margin="5dip"/>
 
 </LinearLayout>
