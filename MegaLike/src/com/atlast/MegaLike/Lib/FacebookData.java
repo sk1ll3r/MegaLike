@@ -51,7 +51,7 @@ public class FacebookData {
     }
 
 	public Vector<Photo> getPhotosAll(String friendUID) {
-		return mDataManager.getAllUserCombinedPhotos(friendUID);
+		return mDataManager.getAllUserCombinedPhotosByPart(friendUID);
 	}
 
 	public Vector<Photo> getPhotosTagged(String friendUID) {
