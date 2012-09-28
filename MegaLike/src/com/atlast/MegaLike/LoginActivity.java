@@ -20,11 +20,16 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 		Extra.mFacebook = new Facebook(Extra.APP_ID);
+		if (SessionManager.restore(Extra.mFacebook, this)) {
+			saveCurrentUserUid();
+			Extra.mFacebookData = new FacebookData(Extra.mFacebook.getAccessToken());
+			startMainGalleryActivity();
+		}
 	}
 
 	public void startLogin(View view) {
 		view.setBackgroundResource(R.drawable.image_fblogin_hover);
-		
+
 		/*
 		 * Start a new session if the old session is not successfully restored
 		 * (isn't valid)

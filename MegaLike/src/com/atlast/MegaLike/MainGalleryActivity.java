@@ -46,6 +46,7 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 			public void onComplete(String response, Object state) {
 				SessionManager.clear(MainGalleryActivity.this);
 				startLoginActivity();
+				finish();
 			}
 
 			public void onIOException(IOException e, Object state) {
@@ -65,7 +66,6 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 	private void startLoginActivity() {
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);
-		finish();
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
