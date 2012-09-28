@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,10 +44,13 @@ public final class PageFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		Log.d("TAG", "PageFragment - onResume : CURRENT_FRIEND_UID = " + Extra.CURRENT_FRIEND_UID);
 		parseImageUrls();
 	}
 
 	private void parseImageUrls() {
+		bigImageUrls.clear();
+		thumbImageUrls.clear();
 		Vector<Photo> photos = Extra.mFacebookData.getPhotos(TAB_INDEX, Extra.CURRENT_FRIEND_UID);
 		Collections.sort(photos);
 		for (Photo photo : photos) {
@@ -118,7 +122,6 @@ public final class PageFragment extends Fragment {
 			} else {
 				imageView = (ImageView) convertView;
 			}
-
 			imageLoader.displayImage(bigImageUrls.get(position), imageView, options, new SimpleImageLoadingListener() {
 				@Override
 				public void onLoadingComplete(Bitmap loadedImage) {
