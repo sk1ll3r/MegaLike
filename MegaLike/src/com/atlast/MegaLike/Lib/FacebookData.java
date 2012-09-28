@@ -63,7 +63,7 @@ public class FacebookData {
 	}
 
 	public Vector<Photo> getPhotosStarred() {
-		return null;
+		return new Vector<Photo>();
 	}
 
 	public String[] getLinks(int userID) {
