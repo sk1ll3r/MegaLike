@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.atlast.MegaLike.FacebookLogic.FQLFriend;
 import com.atlast.MegaLike.Lib.Extra;
-import com.atlast.MegaLike.Lib.FacebookData;
 
 import android.app.SearchManager;
 import android.content.ContentProvider;

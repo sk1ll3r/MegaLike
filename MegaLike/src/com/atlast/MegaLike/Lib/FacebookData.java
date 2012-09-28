@@ -14,11 +14,11 @@ import com.atlast.MegaLike.FacebookLogic.Photo;
 public class FacebookData {
 	public static DataManager mDataManager;
 	private final Map<String, List<FQLFriend>> mSearchSuggestionsDict = new ConcurrentHashMap<String, List<FQLFriend>>();
-	private List<FQLFriend> mFriends;
+	public List<FQLFriend> mFriends; //TODO change to private
 
 	public FacebookData(String accessToken) {
 		mDataManager = new DataManager(accessToken);
-		if(mFriends != null) loadFriends();
+		if(mFriends == null) loadFriends();
 	}
 
 	private void loadFriends() {
