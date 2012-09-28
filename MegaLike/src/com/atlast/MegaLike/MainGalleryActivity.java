@@ -22,18 +22,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 public class MainGalleryActivity extends SherlockFragmentActivity {
-	private static final String[] CONTENT = new String[] { "All", "Tagged", "Uploaded", "Starred", "Statuses" };
-	private int currentFriendId;
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		currentFriendId = loadCurrentUserId();
-	}
-
-	private int loadCurrentUserId() {
-		return Extra.CURRENT_USER_ID;
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -100,17 +88,17 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 
 		@Override
 		public Fragment getItem(int position) {
-			return PageFragment.newInstance(position % CONTENT.length);
+			return PageFragment.newInstance(position % Extra.TAB_CONTENT.length);
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			return CONTENT[position % CONTENT.length].toUpperCase();
+			return Extra.TAB_CONTENT[position % Extra.TAB_CONTENT.length].toUpperCase();
 		}
 
 		@Override
 		public int getCount() {
-			return CONTENT.length;
+			return Extra.TAB_CONTENT.length;
 		}
 	}
 }

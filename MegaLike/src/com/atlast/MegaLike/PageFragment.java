@@ -1,5 +1,10 @@
 package com.atlast.MegaLike;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Vector;
+
+import com.atlast.MegaLike.FacebookLogic.Photo;
 import com.atlast.MegaLike.Lib.Extra;
 import com.atlast.MegaLike.Lib.FacebookData;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -27,9 +32,10 @@ public final class PageFragment extends Fragment {
 	private static final String KEY_CONTENT = "TestFragment:Content";
 	private int TAB_INDEX;
 	private ImageLoader imageLoader;
-	private String[] imageUrls;
+	private Vector<String> bigImageUrls;
+	private Vector<String> thumbImageUrls;
 	private DisplayImageOptions options;
-	private FacebookData data;
+	private FacebookData data = FacebookData.getInstance();
 
 	public static PageFragment newInstance(int tabIndex) {
 		PageFragment fragment = new PageFragment();
@@ -40,20 +46,23 @@ public final class PageFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		imageUrls = data.getPhotos(TAB_INDEX, loadCurrentUserId());
+		parseImageUrls();
 	}
 
-	private int loadCurrentUserId() {
-		return Extra.CURRENT_USER_ID;
+	private void parseImageUrls() {
+		Vector<Photo> photos = data.getPhotos(TAB_INDEX, Extra.CURRENT_FRIEND_UID);
+		Collections.sort(photos);
+		for (Photo photo : photos) {
+			bigImageUrls.add(photo.bigSrc);
+			thumbImageUrls.add(photo.thumbSrc);
+		}
 	}
 
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		options = new DisplayImageOptions.Builder().showStubImage(R.drawable.stub_image).showImageForEmptyUri(R.drawable.image_for_empty_url).cacheInMemory().cacheOnDisc().build();
-		data = new FacebookData(activity);
-		imageUrls = data.getPhotos(TAB_INDEX, loadCurrentUserId());
-
+		parseImageUrls();
 		imageLoader = ImageLoader.getInstance();
 	}
 
@@ -87,14 +96,14 @@ public final class PageFragment extends Fragment {
 
 	private void startPhotoActivity(int position) {
 		Intent intent = new Intent(getActivity(), PhotoActivity.class);
-		intent.putExtra(Extra.IMAGES, imageUrls);
+		intent.putExtra(Extra.IMAGES, bigImageUrls);
 		intent.putExtra(Extra.IMAGE_POSITION, position);
 		startActivity(intent);
 	}
 
 	public class ImageAdapter extends BaseAdapter {
 		public int getCount() {
-			return imageUrls.length;
+			return bigImageUrls.size();
 		}
 
 		public Object getItem(int position) {
@@ -113,7 +122,7 @@ public final class PageFragment extends Fragment {
 				imageView = (ImageView) convertView;
 			}
 
-			imageLoader.displayImage(imageUrls[position], imageView, options, new SimpleImageLoadingListener() {
+			imageLoader.displayImage(bigImageUrls.get(position), imageView, options, new SimpleImageLoadingListener() {
 				@Override
 				public void onLoadingComplete(Bitmap loadedImage) {
 					if (getActivity() != null) {

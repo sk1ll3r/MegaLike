@@ -1,9 +1,7 @@
 package com.atlast.MegaLike;
 
-import java.util.Arrays;
-import java.util.Collections;
-
 import com.actionbarsherlock.app.SherlockListActivity;
+import com.atlast.MegaLike.FacebookLogic.FQLFriend;
 import com.atlast.MegaLike.Lib.Extra;
 import com.atlast.MegaLike.Lib.FacebookData;
 
@@ -17,25 +15,9 @@ import android.widget.ListView;
 public class SearchableActivity extends SherlockListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		String item = (String) getListAdapter().getItem(position);
-		saveCurrentUserId(item);
+		String uid = ((FQLFriend) getListAdapter().getItem(position)).uid;
+		Extra.CURRENT_FRIEND_UID = uid;
 		finish();
-	}
-
-	private void saveCurrentUserId(int id) {
-		Extra.CURRENT_USER_ID = id;
-	}
-	
-	private void saveCurrentUserId(String data) {
-		if (data.equals("rasto")) {
-			saveCurrentUserId(2);
-		} else if (data.equals("mato")) {
-			saveCurrentUserId(3);
-		} else if (data.equals("shaan")) {
-			saveCurrentUserId(4);
-		} else {
-			saveCurrentUserId(1);
-		}
 	}
 
 	@Override
@@ -56,16 +38,14 @@ public class SearchableActivity extends SherlockListActivity {
 			doMySearch(query);
 		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			// Handle a suggestions click (because the suggestions all use ACTION_VIEW
-			String data = intent.getDataString();
-			saveCurrentUserId(data);
+			String uid = intent.getDataString();
+			Extra.CURRENT_FRIEND_UID = uid;
 			finish();
 		}
 	}
 
 	private void doMySearch(String query) {
-		String[] values = new String[] { "Tuan", "Rasto", "Mato", "Shaan", "WebOS", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2" };
-		Collections.shuffle(Arrays.asList(values));
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, FacebookData.getInstance().getMatches(query));
+		ArrayAdapter<FQLFriend> adapter = new ArrayAdapter<FQLFriend>(this, android.R.layout.simple_list_item_1, FacebookData.getInstance().getMatches(query));
 		setListAdapter(adapter);
 	}
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.atlast.MegaLike.FacebookLogic.DataManager;
 import com.atlast.MegaLike.Lib.Extra;
 import com.atlast.MegaLike.Lib.SessionManager;
 import com.facebook.android.*;
@@ -28,8 +29,9 @@ public class LoginActivity extends Activity {
 		if (!SessionManager.restore(Extra.mFacebook, this)) {
 			Extra.mFacebook.authorize(this, Extra.PERMISSIONS, new DialogListener() {
 				public void onComplete(Bundle values) {
-					startMainGalleryActivity();
+					saveCurrentUserUid();
 					SessionManager.save(Extra.mFacebook, LoginActivity.this);
+					startMainGalleryActivity();
 				}
 
 				public void onFacebookError(FacebookError error) {
@@ -63,6 +65,12 @@ public class LoginActivity extends Activity {
 		 * 
 		 * https://developers.facebook.com/docs/mobile/android/build/#register
 		 */
+	}
+
+	private void saveCurrentUserUid() {
+		DataManager mData = new DataManager(Extra.mFacebook.getAccessToken());
+		Extra.CURRENT_USER_UID = mData.getOwnerId();
+		Extra.CURRENT_FRIEND_UID = mData.getOwnerId();
 	}
 
 	private void startMainGalleryActivity() {

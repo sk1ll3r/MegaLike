@@ -1,5 +1,7 @@
 package com.atlast.MegaLike;
 
+import java.util.Vector;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.atlast.MegaLike.Lib.Extra;
 
@@ -12,7 +14,7 @@ import android.support.v4.view.ViewPager;
 public class PhotoActivity extends SherlockFragmentActivity {
 
 	private static int NUM_ITEMS;
-	public String[] imageUrls;
+	public Vector<String> bigImageUrls;
 	private int pagerPosition;
 
 	MyAdapter mAdapter;
@@ -25,9 +27,9 @@ public class PhotoActivity extends SherlockFragmentActivity {
 		setContentView(R.layout.photoactivity);
 
 		Bundle bundle = getIntent().getExtras();
-		imageUrls = bundle.getStringArray(Extra.IMAGES);
+		bigImageUrls = (Vector<String>) bundle.getParcelable(Extra.IMAGES);
 		pagerPosition = bundle.getInt(Extra.IMAGE_POSITION, 0);
-		NUM_ITEMS = imageUrls.length;
+		NUM_ITEMS = bigImageUrls.size();
 
 		mAdapter = new MyAdapter(getSupportFragmentManager());
 

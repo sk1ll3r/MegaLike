@@ -1,5 +1,7 @@
 package com.atlast.MegaLike;
 
+import java.util.Vector;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -22,7 +24,7 @@ import android.widget.Toast;
 public class ImageFragment extends Fragment {
 	private int position;
 	private DisplayImageOptions options;
-	private String[] imageUrls;
+	private Vector<String> bigImageUrls;
 	private ImageLoader imageLoader;
 
 	public static ImageFragment newInstance(int position) {
@@ -42,7 +44,7 @@ public class ImageFragment extends Fragment {
 			.cacheOnDisc()
 			.build();
 
-		imageUrls = ((PhotoActivity) getActivity()).imageUrls;
+		bigImageUrls = ((PhotoActivity) getActivity()).bigImageUrls;
 
 		imageLoader = ImageLoader.getInstance();
 	}
@@ -53,7 +55,7 @@ public class ImageFragment extends Fragment {
 		final ImageView imageView = (ImageView) view.findViewById(R.id.imagefragment_image);
 		final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.imagefragment_loading);
 
-		imageLoader.displayImage(imageUrls[position], imageView, options, new ImageLoadingListener() {
+		imageLoader.displayImage(bigImageUrls.get(position), imageView, options, new ImageLoadingListener() {
 			public void onLoadingStarted() {
 				spinner.setVisibility(View.VISIBLE);
 			}

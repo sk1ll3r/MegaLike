@@ -8,4 +8,8 @@ public class FQLFriend {
 	
 	@Facebook
 	public String name;
+	
+	public String toString(){
+		return name;
+	}
 }
