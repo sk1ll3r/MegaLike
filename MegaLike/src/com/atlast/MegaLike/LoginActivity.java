@@ -2,19 +2,18 @@ package com.atlast.MegaLike;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.atlast.MegaLike.Lib.Extra;
+import com.atlast.MegaLike.Lib.SessionManager;
 import com.facebook.android.*;
 import com.facebook.android.Facebook.*;
 
 public class LoginActivity extends Activity {
 
-	private Facebook facebook = new Facebook("367951253282551");
-	private String[] PERMISSIONS = new String[] { "user_photos", "friends_photos", "publish_stream", "read_stream", "friends_status", "user_status" };
-	private SharedPreferences mPrefs;
+	private Facebook facebook = new Facebook(Extra.APP_ID);
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -26,25 +25,14 @@ public class LoginActivity extends Activity {
 		view.setBackgroundResource(R.drawable.image_fblogin_hover);
 
 		/*
-		 * Get existing access_token if any
-		 */
-		mPrefs = getPreferences(MODE_PRIVATE);
-		String access_token = mPrefs.getString("access_token", null);
-		long expires = mPrefs.getLong("access_expires", 0);
-		if (access_token != null) {
-			facebook.setAccessToken(access_token);
-		}
-		if (expires != 0) {
-			facebook.setAccessExpires(expires);
-		}
-
-		/*
-		 * Only call authorize if the access_token has expired.
-		 */
-		if (!facebook.isSessionValid()) {
-			facebook.authorize(this, PERMISSIONS, new DialogListener() {
+		 * Start a new session if the old session is not successfully restored
+		 * (isn't valid)
+		 */		
+		if (!SessionManager.restore(facebook, this)) {
+			facebook.authorize(this, Extra.PERMISSIONS, new DialogListener() {
 				public void onComplete(Bundle values) {
 					startMainGalleryActivity();
+					SessionManager.save(facebook, LoginActivity.this);
 				}
 
 				public void onFacebookError(FacebookError error) {
