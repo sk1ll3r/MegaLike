@@ -3,7 +3,6 @@ package com.atlast.MegaLike;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.atlast.MegaLike.Lib.Extra;
@@ -12,13 +11,11 @@ import com.facebook.android.*;
 import com.facebook.android.Facebook.*;
 
 public class LoginActivity extends Activity {
-
-	private Facebook facebook = new Facebook(Extra.APP_ID);
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
+		Extra.mFacebook = new Facebook(Extra.APP_ID);
 	}
 
 	public void startLogin(View view) {
@@ -27,12 +24,12 @@ public class LoginActivity extends Activity {
 		/*
 		 * Start a new session if the old session is not successfully restored
 		 * (isn't valid)
-		 */		
-		if (!SessionManager.restore(facebook, this)) {
-			facebook.authorize(this, Extra.PERMISSIONS, new DialogListener() {
+		 */
+		if (!SessionManager.restore(Extra.mFacebook, this)) {
+			Extra.mFacebook.authorize(this, Extra.PERMISSIONS, new DialogListener() {
 				public void onComplete(Bundle values) {
 					startMainGalleryActivity();
-					SessionManager.save(facebook, LoginActivity.this);
+					SessionManager.save(Extra.mFacebook, LoginActivity.this);
 				}
 
 				public void onFacebookError(FacebookError error) {
@@ -77,7 +74,6 @@ public class LoginActivity extends Activity {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		Log.d("TAG", "onActivityResult");
-		facebook.authorizeCallback(requestCode, resultCode, data);
+		Extra.mFacebook.authorizeCallback(requestCode, resultCode, data);
 	}
 }

@@ -8,28 +8,27 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.atlast.MegaLike.Lib.Extra;
+import com.atlast.MegaLike.Lib.SessionManager;
 import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.AsyncFacebookRunner.RequestListener;
-import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
 import com.viewpagerindicator.TabPageIndicator;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.widget.Toast;
 
 public class MainGalleryActivity extends SherlockFragmentActivity {
 	private static final String[] CONTENT = new String[] { "All", "Tagged", "Uploaded", "Starred", "Statuses" };
-	private int currentUserId;
-	private AsyncFacebookRunner mAsyncRunner;
+	private int currentFriendId;
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		currentUserId = loadCurrentUserId();
+		currentFriendId = loadCurrentUserId();
 	}
 
 	private int loadCurrentUserId() {
@@ -46,9 +45,6 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Toast.makeText(MainGalleryActivity.this, "Got click: " + item, Toast.LENGTH_SHORT).show(); // To
-																									// be
-																									// removed
 		if (item.getTitle().equals("Search"))
 			onSearchRequested();
 		if (item.getTitle().equals("Logout"))
@@ -57,8 +53,11 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 	}
 
 	private void logout() {
-		mAsyncRunner.logout(getApplicationContext(), new RequestListener() {
+		Extra.mAsyncRunner = new AsyncFacebookRunner(Extra.mFacebook);
+		Extra.mAsyncRunner.logout(getApplicationContext(), new RequestListener() {
 			public void onComplete(String response, Object state) {
+				SessionManager.clear(MainGalleryActivity.this);
+				startLoginActivity();
 			}
 
 			public void onIOException(IOException e, Object state) {
@@ -75,6 +74,12 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 		});
 	}
 
+	private void startLoginActivity() {
+		Intent intent = new Intent(this, LoginActivity.class);
+		startActivity(intent);
+		finish();
+	}
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.maingallery);
@@ -86,8 +91,6 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 
 		TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.maingallery_indicator);
 		indicator.setViewPager(pager);
-		
-		mAsyncRunner = new AsyncFacebookRunner(new Facebook("367951253282551"));
 	}
 
 	private static class MegalikeAdapter extends FragmentPagerAdapter {
