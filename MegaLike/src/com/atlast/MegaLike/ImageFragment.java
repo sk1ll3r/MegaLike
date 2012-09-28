@@ -24,7 +24,7 @@ import android.widget.Toast;
 public class ImageFragment extends Fragment {
 	private int position;
 	private DisplayImageOptions options;
-	private Vector<String> bigImageUrls;
+	private String[] bigImageUrls;
 	private ImageLoader imageLoader;
 
 	public static ImageFragment newInstance(int position) {
@@ -55,7 +55,7 @@ public class ImageFragment extends Fragment {
 		final ImageView imageView = (ImageView) view.findViewById(R.id.imagefragment_image);
 		final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.imagefragment_loading);
 
-		imageLoader.displayImage(bigImageUrls.get(position), imageView, options, new ImageLoadingListener() {
+		imageLoader.displayImage(bigImageUrls[position], imageView, options, new ImageLoadingListener() {
 			public void onLoadingStarted() {
 				spinner.setVisibility(View.VISIBLE);
 			}

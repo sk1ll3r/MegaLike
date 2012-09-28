@@ -93,7 +93,7 @@ public final class PageFragment extends Fragment {
 
 	private void startPhotoActivity(int position) {
 		Intent intent = new Intent(getActivity(), PhotoActivity.class);
-		intent.putExtra(Extra.IMAGES, bigImageUrls);
+		intent.putExtra(Extra.IMAGES, bigImageUrls.toArray(new String[bigImageUrls.size()]));
 		intent.putExtra(Extra.IMAGE_POSITION, position);
 		startActivity(intent);
 	}
