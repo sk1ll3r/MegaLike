@@ -1,62 +1,27 @@
 package com.atlast.MegaLike.Lib;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
-import android.content.Context;
-
-import com.atlast.MegaLike.R;
 import com.atlast.MegaLike.FacebookLogic.DataManager;
 import com.atlast.MegaLike.FacebookLogic.FQLFriend;
 import com.atlast.MegaLike.FacebookLogic.Photo;
 
 public class FacebookData {
-	private static DataManager mDataManager;
-	String[] tuanAll, tuanTagged, tuanUploaded, tuanStarred, rastoAll, rastoTagged, rastoUploaded, rastoStarred, matoAll, matoTagged, matoUploaded, matoStarred, shaanAll, shaanTagged, shaanUploaded, shaanStarred;
+	public static DataManager mDataManager;
 	private final Map<String, List<FQLFriend>> mSearchSuggestionsDict = new ConcurrentHashMap<String, List<FQLFriend>>();
 	private List<FQLFriend> mFriends;
 
-	// TODO remove in real version
-	private static final FacebookData sInstance = new FacebookData(UILApplication.getAppContext());
-
-	public static FacebookData getInstance() {
-		mDataManager = new DataManager(Extra.mFacebook.getAccessToken());
-		return sInstance;
-	}
-
-	private FacebookData(Context context) {
-		String[] lightImages = context.getResources().getStringArray(R.array.light_images);
-
-		tuanAll = concat(context.getResources().getStringArray(R.array.fbdata_tuan_all), lightImages);
-		tuanTagged = concat(context.getResources().getStringArray(R.array.fbdata_tuan_tagged), lightImages);
-		tuanUploaded = concat(context.getResources().getStringArray(R.array.fbdata_tuan_uploaded), lightImages);
-		tuanStarred = concat(context.getResources().getStringArray(R.array.fbdata_tuan_starred), lightImages);
-
-		rastoAll = concat(context.getResources().getStringArray(R.array.fbdata_rasto_all), lightImages);
-		rastoTagged = concat(context.getResources().getStringArray(R.array.fbdata_rasto_tagged), lightImages);
-		rastoUploaded = concat(context.getResources().getStringArray(R.array.fbdata_rasto_uploaded), lightImages);
-		rastoStarred = concat(context.getResources().getStringArray(R.array.fbdata_rasto_starred), lightImages);
-
-		matoAll = concat(context.getResources().getStringArray(R.array.fbdata_mato_all), lightImages);
-		matoTagged = concat(context.getResources().getStringArray(R.array.fbdata_mato_tagged), lightImages);
-		matoUploaded = concat(context.getResources().getStringArray(R.array.fbdata_mato_uploaded), lightImages);
-		matoStarred = concat(context.getResources().getStringArray(R.array.fbdata_mato_starred), lightImages);
-
-		shaanAll = concat(context.getResources().getStringArray(R.array.fbdata_shaan_all), lightImages);
-		shaanTagged = concat(context.getResources().getStringArray(R.array.fbdata_shaan_tagged), lightImages);
-		shaanUploaded = concat(context.getResources().getStringArray(R.array.fbdata_shaan_uploaded), lightImages);
-		shaanStarred = concat(context.getResources().getStringArray(R.array.fbdata_shaan_starred), lightImages);
-
+	public FacebookData(String accessToken) {
+		mDataManager = new DataManager(accessToken);
 		if(mFriends != null) loadFriends();
 	}
 
 	private void loadFriends() {
-		String[] values = new String[] { "Tuan", "Rasto", "Mato", "Shaan", "WebOS", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2" };
 		mFriends = mDataManager.getFriends();
 		for (FQLFriend friend : mFriends)
 			addFriend(friend);
@@ -82,14 +47,8 @@ public class FacebookData {
 	
 	public List<FQLFriend> getMatches(String query) {
         List<FQLFriend> list = mSearchSuggestionsDict.get(query);
-        return list == null ? Collections.EMPTY_LIST : list;
+        return list == null ? (List<FQLFriend>) Collections.EMPTY_LIST : list;
     }
-
-	private static <T> T[] concat(T[] first, T[] second) {
-		T[] result = Arrays.copyOf(first, first.length + second.length);
-		System.arraycopy(second, 0, result, first.length, second.length);
-		return result;
-	}
 
 	public Vector<Photo> getPhotosAll(String friendUID) {
 		return mDataManager.getAllUserCombinedPhotos(friendUID);

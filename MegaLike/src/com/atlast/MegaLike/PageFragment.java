@@ -1,12 +1,10 @@
 package com.atlast.MegaLike;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Vector;
 
 import com.atlast.MegaLike.FacebookLogic.Photo;
 import com.atlast.MegaLike.Lib.Extra;
-import com.atlast.MegaLike.Lib.FacebookData;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
@@ -32,10 +30,9 @@ public final class PageFragment extends Fragment {
 	private static final String KEY_CONTENT = "TestFragment:Content";
 	private int TAB_INDEX;
 	private ImageLoader imageLoader;
-	private Vector<String> bigImageUrls;
-	private Vector<String> thumbImageUrls;
+	private Vector<String> bigImageUrls = new Vector<String>();
+	private Vector<String> thumbImageUrls = new Vector<String>();
 	private DisplayImageOptions options;
-	private FacebookData data = FacebookData.getInstance();
 
 	public static PageFragment newInstance(int tabIndex) {
 		PageFragment fragment = new PageFragment();
@@ -50,7 +47,7 @@ public final class PageFragment extends Fragment {
 	}
 
 	private void parseImageUrls() {
-		Vector<Photo> photos = data.getPhotos(TAB_INDEX, Extra.CURRENT_FRIEND_UID);
+		Vector<Photo> photos = Extra.mFacebookData.getPhotos(TAB_INDEX, Extra.CURRENT_FRIEND_UID);
 		Collections.sort(photos);
 		for (Photo photo : photos) {
 			bigImageUrls.add(photo.bigSrc);

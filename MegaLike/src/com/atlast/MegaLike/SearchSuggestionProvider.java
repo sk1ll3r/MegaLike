@@ -3,6 +3,7 @@ package com.atlast.MegaLike;
 import java.util.List;
 
 import com.atlast.MegaLike.FacebookLogic.FQLFriend;
+import com.atlast.MegaLike.Lib.Extra;
 import com.atlast.MegaLike.Lib.FacebookData;
 
 import android.app.SearchManager;
@@ -79,7 +80,7 @@ public class SearchSuggestionProvider extends ContentProvider {
 
 	private Cursor getSuggestions(String query, String[] projection) {
 		String processedQuery = query == null ? "" : query.toLowerCase();
-		List<FQLFriend> matchedFriends = FacebookData.getInstance().getMatches(processedQuery);
+		List<FQLFriend> matchedFriends = Extra.mFacebookData.getMatches(processedQuery);
 
 		MatrixCursor cursor = new MatrixCursor(COLUMNS);
 		long id = 0;

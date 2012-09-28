@@ -3,7 +3,6 @@
     android:hint="@string/search_hint"
     android:label="@string/app_name"
     android:searchSuggestAuthority="com.atlast.MegaLike.SearchSuggestionProvider"
-    android:searchSuggestIntentAction="android.intent.action.VIEW" >
- >
+    android:searchSuggestIntentAction="android.intent.action.VIEW" >
 
 </searchable>

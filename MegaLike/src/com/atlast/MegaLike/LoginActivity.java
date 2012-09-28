@@ -3,10 +3,12 @@ package com.atlast.MegaLike;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.atlast.MegaLike.FacebookLogic.DataManager;
 import com.atlast.MegaLike.Lib.Extra;
+import com.atlast.MegaLike.Lib.FacebookData;
 import com.atlast.MegaLike.Lib.SessionManager;
 import com.facebook.android.*;
 import com.facebook.android.Facebook.*;
@@ -14,6 +16,7 @@ import com.facebook.android.Facebook.*;
 public class LoginActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		Log.d("TAG", "LoginActivity - onCreate");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 		Extra.mFacebook = new Facebook(Extra.APP_ID);
@@ -21,7 +24,7 @@ public class LoginActivity extends Activity {
 
 	public void startLogin(View view) {
 		view.setBackgroundResource(R.drawable.image_fblogin_hover);
-
+		
 		/*
 		 * Start a new session if the old session is not successfully restored
 		 * (isn't valid)
@@ -31,6 +34,7 @@ public class LoginActivity extends Activity {
 				public void onComplete(Bundle values) {
 					saveCurrentUserUid();
 					SessionManager.save(Extra.mFacebook, LoginActivity.this);
+					Extra.mFacebookData = new FacebookData(Extra.mFacebook.getAccessToken());
 					startMainGalleryActivity();
 				}
 
@@ -43,6 +47,10 @@ public class LoginActivity extends Activity {
 				public void onCancel() {
 				}
 			});
+		} else {
+			saveCurrentUserUid();
+			Extra.mFacebookData = new FacebookData(Extra.mFacebook.getAccessToken());
+			startMainGalleryActivity();
 		}
 
 		/*
@@ -71,6 +79,7 @@ public class LoginActivity extends Activity {
 		DataManager mData = new DataManager(Extra.mFacebook.getAccessToken());
 		Extra.CURRENT_USER_UID = mData.getOwnerId();
 		Extra.CURRENT_FRIEND_UID = mData.getOwnerId();
+		Log.d("TAG", "CURRENT_USER_UID = getOwnerId = " + Extra.CURRENT_USER_UID);
 	}
 
 	private void startMainGalleryActivity() {

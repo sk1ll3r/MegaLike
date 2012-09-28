@@ -3,7 +3,6 @@ package com.atlast.MegaLike;
 import com.actionbarsherlock.app.SherlockListActivity;
 import com.atlast.MegaLike.FacebookLogic.FQLFriend;
 import com.atlast.MegaLike.Lib.Extra;
-import com.atlast.MegaLike.Lib.FacebookData;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -45,7 +44,7 @@ public class SearchableActivity extends SherlockListActivity {
 	}
 
 	private void doMySearch(String query) {
-		ArrayAdapter<FQLFriend> adapter = new ArrayAdapter<FQLFriend>(this, android.R.layout.simple_list_item_1, FacebookData.getInstance().getMatches(query));
+		ArrayAdapter<FQLFriend> adapter = new ArrayAdapter<FQLFriend>(this, android.R.layout.simple_list_item_1, Extra.mFacebookData.getMatches(query));
 		setListAdapter(adapter);
 	}
 }
