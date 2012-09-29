@@ -61,7 +61,6 @@ public final class PhotosTabFragment extends Fragment {
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		options = new DisplayImageOptions.Builder().showStubImage(R.drawable.stub_image).showImageForEmptyUri(R.drawable.image_for_empty_url).cacheInMemory().cacheOnDisc().build();
-		parseImageUrls();
 		imageLoader = ImageLoader.getInstance();
 	}
 
@@ -82,6 +81,7 @@ public final class PhotosTabFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		parseImageUrls();
 		View view = inflater.inflate(R.layout.photostabfragment, container, false);
 		GridView gridView = (GridView) view.findViewById(R.id.photostabfragment_gridview);
 		gridView.setAdapter(new ImageAdapter());

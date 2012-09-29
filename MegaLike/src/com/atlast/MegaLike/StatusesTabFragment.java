@@ -22,7 +22,7 @@ import com.atlast.MegaLike.FacebookLogic.Link;
 import com.atlast.MegaLike.Lib.Extra;
 
 public final class StatusesTabFragment extends Fragment {
-	private Vector<Link> mLinks;
+	private Vector<Link> mLinks = new Vector<Link>();
 	private Vector<Spanned> mStatuses = new Vector<Spanned>();
 
 	public static StatusesTabFragment newInstance() {
@@ -31,8 +31,15 @@ public final class StatusesTabFragment extends Fragment {
 	}
 
 	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+	public void onResume() {
+		super.onResume();
+		parseLinks();
+		
+	}
+
+	private void parseLinks() {
+		mLinks.clear();
+		mStatuses.clear();
 		mLinks = Extra.mFacebookData.getLinks(Extra.CURRENT_FRIEND_UID);
 		Collections.sort(mLinks);
 		for (Link link : mLinks) {
@@ -45,18 +52,8 @@ public final class StatusesTabFragment extends Fragment {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-	}
-
-	@Override
-	public void onStop() {
-		super.onStop();
-	}
-
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		parseLinks();
 		View view = inflater.inflate(R.layout.statusestabfragment, container, false);
 		ListView listView = (ListView) view.findViewById(R.id.statusestabfragment_listview);
 
@@ -66,7 +63,11 @@ public final class StatusesTabFragment extends Fragment {
 	}
 
 	public class StatusArrayAdapter extends ArrayAdapter<Spanned> {
-		// TODO might have an issue like http://stackoverflow.com/a/4409383/1357509
+		// TODO might have an issue like
+		// http://stackoverflow.com/a/4409383/1357509 or
+		// http://stackoverflow.com/a/10973709/1357509
+		// original tutorial here
+		// http://jtomlinson.blogspot.sk/2010/03/textview-and-html.html
 		private final Context context;
 		private final Spanned[] values;
 
