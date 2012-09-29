@@ -1198,6 +1198,7 @@ containing a value of this type.
         public static final int showHome=0x7f060005;
         public static final int showTitle=0x7f060007;
         public static final int statusestabfragment_listview=0x7f060037;
+        public static final int statusestabfragment_rowlayout_textview=0x7f060038;
         public static final int tabMode=0x7f060003;
         public static final int top=0x7f060014;
         public static final int triangle=0x7f060011;
@@ -1244,6 +1245,7 @@ containing a value of this type.
         public static final int sherlock_spinner_dropdown_item=0x7f03001b;
         public static final int sherlock_spinner_item=0x7f03001c;
         public static final int statusestabfragment=0x7f03001d;
+        public static final int statusestabfragment_rowlayout=0x7f03001e;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
