@@ -34,7 +34,6 @@ public final class StatusesTabFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		parseLinks();
-		
 	}
 
 	private void parseLinks() {
@@ -56,26 +55,24 @@ public final class StatusesTabFragment extends Fragment {
 		parseLinks();
 		View view = inflater.inflate(R.layout.statusestabfragment, container, false);
 		ListView listView = (ListView) view.findViewById(R.id.statusestabfragment_listview);
-
-		StatusArrayAdapter adapter = new StatusArrayAdapter(getActivity(), mStatuses.toArray(new Spanned[mStatuses.size()]));
-		listView.setAdapter(adapter);
+		listView.setAdapter(new StatusArrayAdapter(getActivity(), mStatuses.toArray(new Spanned[mStatuses.size()])));
 		return view;
 	}
 
 	public class StatusArrayAdapter extends ArrayAdapter<Spanned> {
+
+		private Spanned[] values;
+
+		public StatusArrayAdapter(Context context, Spanned[] values) {
+			super(context, R.layout.statusestabfragment_rowlayout, values);
+			this.values = values;
+		}
+
 		// TODO might have an issue like
 		// http://stackoverflow.com/a/4409383/1357509 or
 		// http://stackoverflow.com/a/10973709/1357509
 		// original tutorial here
 		// http://jtomlinson.blogspot.sk/2010/03/textview-and-html.html
-		private final Context context;
-		private final Spanned[] values;
-
-		public StatusArrayAdapter(Context context, Spanned[] values) {
-			super(context, R.layout.statusestabfragment_rowlayout, values);
-			this.context = context;
-			this.values = values;
-		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
@@ -86,7 +83,7 @@ public final class StatusesTabFragment extends Fragment {
 				textView = (TextView) convertView;
 			}
 			textView.setMovementMethod(LinkMovementMethod.getInstance());
-			textView.setText(values[position]);
+			textView.setText(position < mStatuses.size() ? mStatuses.get(position) : values[position]);
 			return textView;
 		}
 	}
