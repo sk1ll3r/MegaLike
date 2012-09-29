@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.atlast.MegaLike.FacebookLogic.DataManager;
 import com.atlast.MegaLike.FacebookLogic.FQLFriend;
+import com.atlast.MegaLike.FacebookLogic.Link;
 import com.atlast.MegaLike.FacebookLogic.Photo;
 
 public class FacebookData {
@@ -66,8 +67,8 @@ public class FacebookData {
 		return new Vector<Photo>();
 	}
 
-	public String[] getLinks(int userID) {
-		return null;
+	public Vector<Link> getLinks(String friendUID) {
+		return mDataManager.getUserLinks(friendUID);
 	}
 	
 	public Vector<Photo> getPhotos(int index, String friendUID) {

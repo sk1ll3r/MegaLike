@@ -44,4 +44,8 @@ public class Link implements Comparable<Link> {
 	public int hashCode() {
 		return linkId.hashCode();
 	}
+	
+	public String toString(){
+		return status;
+	}
 }
