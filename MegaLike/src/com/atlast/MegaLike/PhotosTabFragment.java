@@ -14,7 +14,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public final class PageFragment extends Fragment {
+public final class PhotosTabFragment extends Fragment {
 
 	private static final String KEY_CONTENT = "TestFragment:Content";
 	private int TAB_INDEX;
@@ -35,8 +34,8 @@ public final class PageFragment extends Fragment {
 	private Vector<String> thumbImageUrls = new Vector<String>();
 	private DisplayImageOptions options;
 
-	public static PageFragment newInstance(int tabIndex) {
-		PageFragment fragment = new PageFragment();
+	public static PhotosTabFragment newInstance(int tabIndex) {
+		PhotosTabFragment fragment = new PhotosTabFragment();
 		fragment.TAB_INDEX = tabIndex;
 		return fragment;
 	}
@@ -44,7 +43,6 @@ public final class PageFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.d("TAG", "PageFragment - onResume : CURRENT_FRIEND_UID = " + Extra.CURRENT_FRIEND_UID);
 		parseImageUrls();
 	}
 
@@ -84,8 +82,8 @@ public final class PageFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.pagefragment, container, false);
-		GridView gridView = (GridView) view.findViewById(R.id.pagefragment_gridview);
+		View view = inflater.inflate(R.layout.photostabfragment, container, false);
+		GridView gridView = (GridView) view.findViewById(R.id.photostabfragment_gridview);
 		gridView.setAdapter(new ImageAdapter());
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -118,7 +116,7 @@ public final class PageFragment extends Fragment {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			final ImageView imageView;
 			if (convertView == null) {
-				imageView = (ImageView) getActivity().getLayoutInflater().inflate(R.layout.pagefragment_gridimage, parent, false);
+				imageView = (ImageView) getActivity().getLayoutInflater().inflate(R.layout.photostabfragment_gridimage, parent, false);
 			} else {
 				imageView = (ImageView) convertView;
 			}

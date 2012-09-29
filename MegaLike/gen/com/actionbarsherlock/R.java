@@ -1188,15 +1188,16 @@ containing a value of this type.
         public static final int maingallery_pager=0x7f060030;
         public static final int none=0x7f060010;
         public static final int normal=0x7f060001;
-        public static final int pagefragment_gridimage_image=0x7f060033;
-        public static final int pagefragment_gridview=0x7f060032;
-        public static final int pagefragment_layoutview=0x7f060031;
-        public static final int photoactivity_pager=0x7f060034;
+        public static final int pagefragment_gridimage_image=0x7f060034;
+        public static final int pagefragment_layoutview=0x7f060032;
+        public static final int photoactivity_pager=0x7f060031;
+        public static final int photostabfragment_gridview=0x7f060033;
         public static final int searchable_list=0x7f060036;
         public static final int searchable_textField=0x7f060035;
         public static final int showCustom=0x7f060008;
         public static final int showHome=0x7f060005;
         public static final int showTitle=0x7f060007;
+        public static final int statusestabfragment_listview=0x7f060037;
         public static final int tabMode=0x7f060003;
         public static final int top=0x7f060014;
         public static final int triangle=0x7f060011;
@@ -1236,12 +1237,13 @@ containing a value of this type.
         public static final int imagefragment=0x7f030014;
         public static final int login=0x7f030015;
         public static final int maingallery=0x7f030016;
-        public static final int pagefragment=0x7f030017;
-        public static final int pagefragment_gridimage=0x7f030018;
-        public static final int photoactivity=0x7f030019;
+        public static final int photoactivity=0x7f030017;
+        public static final int photostabfragment=0x7f030018;
+        public static final int photostabfragment_gridimage=0x7f030019;
         public static final int searchable=0x7f03001a;
         public static final int sherlock_spinner_dropdown_item=0x7f03001b;
         public static final int sherlock_spinner_item=0x7f03001c;
+        public static final int statusestabfragment=0x7f03001d;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 

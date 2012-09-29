@@ -1,7 +1,5 @@
 package com.atlast.MegaLike;
 
-import java.util.Vector;
-
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
