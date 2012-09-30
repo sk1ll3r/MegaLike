@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,20 @@ public final class StatusesTabFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		Log.d("TAG", "StatusesTabFragment - onResume");
 		parseLinks();
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		Log.d("TAG", "StatusesTabFragment - onStop");
+	}
+	
+	@Override
+	public void onPause() {
+		super.onStop();
+		Log.d("TAG", "StatusesTabFragment - onPause");
 	}
 
 	private void parseLinks() {
@@ -48,10 +62,12 @@ public final class StatusesTabFragment extends Fragment {
 			} else
 				mStatuses.add(Html.fromHtml(link.status));
 		}
+		Log.d("TAG", "StatusesTabFragment - parseLinks - mStatuses.size() = " + mStatuses.size());
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		Log.d("TAG", "StatusesTabFragment - onCreateView");
 		parseLinks();
 		View view = inflater.inflate(R.layout.statusestabfragment, container, false);
 		ListView listView = (ListView) view.findViewById(R.id.statusestabfragment_listview);
@@ -76,6 +92,7 @@ public final class StatusesTabFragment extends Fragment {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
+			Log.d("TAG", "StatusesTabFragment - StatusArrayAdapter - getView(" + position + ")");
 			TextView textView;
 			if (convertView == null) {
 				textView = (TextView) getActivity().getLayoutInflater().inflate(R.layout.statusestabfragment_rowlayout, parent, false);
