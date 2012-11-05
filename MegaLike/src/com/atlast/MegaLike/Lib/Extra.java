@@ -4,7 +4,7 @@ import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.Facebook;
 
 public class Extra {
-	public static final String[] TAB_CONTENT = new String[] { "All", "Tagged", "Uploaded", "Starred", "Statuses" };
+	public static final String[] TAB_CONTENT = new String[] { "Photos", "Statuses" };
 	public static final String IMAGES = "com.atlast.MegaLike.Lib.IMAGES";
 	public static final String IMAGE_POSITION = "com.atlast.MegaLike.Lib.IMAGE_POSITION";
 	public static int THEME = com.actionbarsherlock.R.style.Theme_Sherlock_ForceOverflow;

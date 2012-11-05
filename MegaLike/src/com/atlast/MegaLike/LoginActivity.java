@@ -44,6 +44,7 @@ public class LoginActivity extends Activity {
 				}
 
 				public void onFacebookError(FacebookError error) {
+					Log.d("TAG","onFacebookError "+error.getMessage());
 				}
 
 				public void onError(DialogError e) {

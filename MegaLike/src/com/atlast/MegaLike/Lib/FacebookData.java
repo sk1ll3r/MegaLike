@@ -75,12 +75,6 @@ public class FacebookData {
 		switch (index) {
 		case 0:
 			return getPhotosAll(friendUID);
-		case 1:
-			return getPhotosTagged(friendUID);
-		case 2:
-			return getPhotosUploaded(friendUID);
-		case 3:
-			return getPhotosStarred();
 		default:
 			return getPhotosAll(friendUID);
 		}

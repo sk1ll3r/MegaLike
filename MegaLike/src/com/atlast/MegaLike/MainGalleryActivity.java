@@ -88,7 +88,7 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 
 		@Override
 		public Fragment getItem(int position) {
-			if (position >= 0 && position <= 3)
+			if (position == 0)
 				return PhotosTabFragment.newInstance(position % Extra.TAB_CONTENT.length);
 			else
 				return StatusesTabFragment.newInstance();
