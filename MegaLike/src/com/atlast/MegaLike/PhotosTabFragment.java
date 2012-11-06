@@ -33,7 +33,6 @@ public final class PhotosTabFragment extends Fragment {
 	private ImageLoader imageLoader;
 	private Vector<String> bigImageUrls = new Vector<String>();
 	private Vector<String> thumbImageUrls = new Vector<String>();
-	private DisplayImageOptions options;
 	private String currentlyDisplayedUID;
 
 	public static PhotosTabFragment newInstance(int tabIndex) {
@@ -68,7 +67,6 @@ public final class PhotosTabFragment extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		options = new DisplayImageOptions.Builder().showStubImage(R.drawable.stub_image).showImageForEmptyUri(R.drawable.image_for_empty_url).cacheInMemory().cacheOnDisc().build();
 		imageLoader = ImageLoader.getInstance();
 	}
 
@@ -129,7 +127,7 @@ public final class PhotosTabFragment extends Fragment {
 			} else {
 				imageView = (ImageView) convertView;
 			}
-			imageLoader.displayImage(bigImageUrls.get(position), imageView, options, new SimpleImageLoadingListener() {
+			imageLoader.displayImage(bigImageUrls.get(position), imageView, new SimpleImageLoadingListener() {
 				@Override
 				public void onLoadingComplete(Bitmap loadedImage) {
 					if (getActivity() != null) {

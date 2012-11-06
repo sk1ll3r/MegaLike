@@ -1,5 +1,6 @@
 package com.atlast.MegaLike;
 
+import com.atlast.MegaLike.Lib.Extra;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -21,7 +22,6 @@ import android.widget.Toast;
 
 public class ImageFragment extends Fragment {
 	private int position;
-	private DisplayImageOptions options;
 	private String[] bigImageUrls;
 	private ImageLoader imageLoader;
 
@@ -34,16 +34,7 @@ public class ImageFragment extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		// @formatter:off
-		options = new DisplayImageOptions.Builder()
-			.showStubImage(R.drawable.stub_image)
-			.showImageForEmptyUri(R.drawable.image_for_empty_url)
-			.cacheInMemory()
-			.cacheOnDisc()
-			.build();
-
 		bigImageUrls = ((PhotoActivity) getActivity()).bigImageUrls;
-
 		imageLoader = ImageLoader.getInstance();
 	}
 
@@ -53,7 +44,7 @@ public class ImageFragment extends Fragment {
 		final ImageView imageView = (ImageView) view.findViewById(R.id.imagefragment_image);
 		final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.imagefragment_loading);
 
-		imageLoader.displayImage(bigImageUrls[position], imageView, options, new ImageLoadingListener() {
+		imageLoader.displayImage(bigImageUrls[position], imageView, new ImageLoadingListener() {
 			public void onLoadingStarted() {
 				spinner.setVisibility(View.VISIBLE);
 			}

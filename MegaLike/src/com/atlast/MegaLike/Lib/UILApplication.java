@@ -21,7 +21,9 @@ public class UILApplication extends Application {
 			.memoryCacheSize(1500000)
 			.denyCacheImageMultipleSizesInMemory()
 			.discCacheFileNameGenerator(new Md5FileNameGenerator())
+			.discCacheSize(2000000)
 			.enableLogging()
+			.defaultDisplayImageOptions(Extra.DISPLAY_IMAGE_OPTIONS)
 			.build();
 		//@formatter:on
 		// Initialize ImageLoader with configuration.
