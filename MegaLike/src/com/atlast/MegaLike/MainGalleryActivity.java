@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 
 public class MainGalleryActivity extends SherlockFragmentActivity {
+	private static final int ACTIVITY_REQUEST_CODE = 0;
 	private FragmentStatePagerAdapter mFragmentAdapter;
 
 	@Override
@@ -86,24 +87,41 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 
 		TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.maingallery_indicator);
 		indicator.setViewPager(pager);
-
-		configureSearch();
-	}
-
-	private void configureSearch() {
-		((SearchManager) getSystemService(Context.SEARCH_SERVICE)).setOnDismissListener(new SearchManager.OnDismissListener() {
-
-			public void onDismiss() {
-				Log.d("TAG", "MainGalleryActivity - onDismiss()");
-				redrawUI();
-			}
-
-		});
 	}
 
 	private void redrawUI() {
 		Log.d("TAG", "MainGalleryActivity - redrawUI()");
 		mFragmentAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		setIntent(intent);
+		handleIntent(intent);
+	}
+
+	private void handleIntent(Intent intent) {
+		Log.d("TAG", "MainGalleryActivity - handleIntent()");
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			String query = intent.getStringExtra(SearchManager.QUERY);
+			final Intent searchIntent = new Intent(getApplicationContext(), SearchableActivity.class);
+			searchIntent.putExtra(SearchManager.QUERY, query);
+			searchIntent.setAction(Intent.ACTION_SEARCH);
+			Log.d("TAG", "MainGalleryActivity - startActivityForResult()");
+			Log.d("TAG", "MainGalleryActivity - startActivityForResult() - query = " + query);
+			startActivityForResult(searchIntent, ACTIVITY_REQUEST_CODE);
+		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+			String uid = intent.getDataString();
+			Extra.CURRENT_FRIEND_UID = uid;
+			Log.d("TAG", "MainGalleryActivity - handleIntent - Extra.CURRENT_FRIEND_UID = " + Extra.CURRENT_FRIEND_UID);
+			redrawUI();
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == ACTIVITY_REQUEST_CODE)
+			redrawUI();
 	}
 
 	private static class MegalikeAdapter extends FragmentStatePagerAdapter {

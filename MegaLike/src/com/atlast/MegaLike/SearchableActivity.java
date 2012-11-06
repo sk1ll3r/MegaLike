@@ -36,6 +36,7 @@ public class SearchableActivity extends SherlockListActivity {
 	private void handleIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			String query = intent.getStringExtra(SearchManager.QUERY);
+			Log.d("TAG", "SearchableActivity - handleIntent() - query = " + query);
 			doMySearch(query);
 		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			// Handle a suggestions click (because the suggestions all use ACTION_VIEW
