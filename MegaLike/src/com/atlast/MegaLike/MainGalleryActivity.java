@@ -29,7 +29,6 @@ import android.view.ViewGroup;
 
 public class MainGalleryActivity extends SherlockFragmentActivity {
 	private FragmentStatePagerAdapter mFragmentAdapter;
-	protected static boolean update = false;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -104,9 +103,7 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 
 	private void redrawUI() {
 		Log.d("TAG", "MainGalleryActivity - redrawUI()");
-		update = true;
 		mFragmentAdapter.notifyDataSetChanged();
-		update = false;
 	}
 
 	private static class MegalikeAdapter extends FragmentStatePagerAdapter {
@@ -115,12 +112,8 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 		}
 
 		public int getItemPosition(Object object) {
-			Log.d("TAG", "MainGalleryActivity - update = " + update);
-			if (update) {
-				return POSITION_NONE;
-			} else {
-				return POSITION_UNCHANGED;
-			}
+			Log.d("TAG", "MainGalleryActivity - updating fragments");
+			return POSITION_NONE;
 		}
 
 		@Override

@@ -54,6 +54,7 @@ public final class PhotosTabFragment extends Fragment {
 			bigImageUrls.clear();
 			thumbImageUrls.clear();
 			Vector<Photo> photos = Extra.mFacebookData.getPhotos(TAB_INDEX, Extra.CURRENT_FRIEND_UID);
+			Log.d("TAG", "PhotosTabFragment - parseLinks() - photos.size() = " + photos.size());
 			Collections.sort(photos);
 			for (Photo photo : photos) {
 				bigImageUrls.add(photo.bigSrc);

@@ -54,6 +54,7 @@ public final class StatusesTabFragment extends Fragment {
 			mLinks.clear();
 			mStatuses.clear();
 			mLinks = Extra.mFacebookData.getLinks(Extra.CURRENT_FRIEND_UID);
+			Log.d("TAG", "StatusesTabFragment - parseLinks() - mLinks.size() = " + mLinks.size());
 			Collections.sort(mLinks);
 			for (Link link : mLinks) {
 				if (link.url != null && link.linkTitle != null) {
