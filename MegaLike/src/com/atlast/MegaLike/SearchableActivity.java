@@ -17,6 +17,7 @@ public class SearchableActivity extends SherlockListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		String uid = ((FQLFriend) getListAdapter().getItem(position)).uid;
 		Extra.CURRENT_FRIEND_UID = uid;
+		Log.d("TAG", "SearchableActivity - onListItemClick - Extra.CURRENT_FRIEND_UID = " + Extra.CURRENT_FRIEND_UID);
 		finish();
 	}
 
@@ -40,6 +41,7 @@ public class SearchableActivity extends SherlockListActivity {
 			// Handle a suggestions click (because the suggestions all use ACTION_VIEW
 			String uid = intent.getDataString();
 			Extra.CURRENT_FRIEND_UID = uid;
+			Log.d("TAG", "SearchableActivity - handleIntent - Extra.CURRENT_FRIEND_UID = " + Extra.CURRENT_FRIEND_UID);
 			finish();
 		}
 	}

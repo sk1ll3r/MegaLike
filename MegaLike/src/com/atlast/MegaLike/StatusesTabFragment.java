@@ -25,6 +25,7 @@ import com.atlast.MegaLike.Lib.Extra;
 public final class StatusesTabFragment extends Fragment {
 	private Vector<Link> mLinks = new Vector<Link>();
 	private Vector<Spanned> mStatuses = new Vector<Spanned>();
+	private String currentlyDisplayedUID;
 
 	public static StatusesTabFragment newInstance() {
 		StatusesTabFragment fragment = new StatusesTabFragment();
@@ -33,36 +34,37 @@ public final class StatusesTabFragment extends Fragment {
 
 	@Override
 	public void onResume() {
-		super.onResume();
 		Log.d("TAG", "StatusesTabFragment - onResume");
+		super.onResume();
 		parseLinks();
 	}
 
 	@Override
 	public void onStop() {
 		super.onStop();
-		Log.d("TAG", "StatusesTabFragment - onStop");
 	}
-	
+
 	@Override
 	public void onPause() {
 		super.onStop();
-		Log.d("TAG", "StatusesTabFragment - onPause");
 	}
 
 	private void parseLinks() {
-		mLinks.clear();
-		mStatuses.clear();
-		mLinks = Extra.mFacebookData.getLinks(Extra.CURRENT_FRIEND_UID);
-		Collections.sort(mLinks);
-		for (Link link : mLinks) {
-			if (link.url != null && link.linkTitle != null) {
-				String linkUrl = link.url.replaceAll("gdata.youtube.com/feeds/api/videos/", "www.youtube.com/watch?v=");
-				mStatuses.add(Html.fromHtml(link.status + "\n<a href=" + linkUrl + ">" + link.linkTitle + "</a>"));
-			} else
-				mStatuses.add(Html.fromHtml(link.status));
+		if (!Extra.CURRENT_FRIEND_UID.equals(currentlyDisplayedUID)) {
+			mLinks.clear();
+			mStatuses.clear();
+			mLinks = Extra.mFacebookData.getLinks(Extra.CURRENT_FRIEND_UID);
+			Collections.sort(mLinks);
+			for (Link link : mLinks) {
+				if (link.url != null && link.linkTitle != null) {
+					String linkUrl = link.url.replaceAll("gdata.youtube.com/feeds/api/videos/", "www.youtube.com/watch?v=");
+					mStatuses.add(Html.fromHtml(link.status + "\n<a href=" + linkUrl + ">" + link.linkTitle + "</a>"));
+				} else
+					mStatuses.add(Html.fromHtml(link.status));
+			}
+			currentlyDisplayedUID = Extra.CURRENT_FRIEND_UID;
+			Log.d("TAG", "StatusesTabFragment - parseLinks - parsed " + mStatuses.size() + " statuses of " + Extra.CURRENT_FRIEND_UID);
 		}
-		Log.d("TAG", "StatusesTabFragment - parseLinks - mStatuses.size() = " + mStatuses.size());
 	}
 
 	@Override
@@ -92,7 +94,6 @@ public final class StatusesTabFragment extends Fragment {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			Log.d("TAG", "StatusesTabFragment - StatusArrayAdapter - getView(" + position + ")");
 			TextView textView;
 			if (convertView == null) {
 				textView = (TextView) getActivity().getLayoutInflater().inflate(R.layout.statusestabfragment_rowlayout, parent, false);

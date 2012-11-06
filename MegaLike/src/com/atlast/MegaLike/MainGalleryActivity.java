@@ -14,14 +14,22 @@ import com.facebook.android.AsyncFacebookRunner.RequestListener;
 import com.facebook.android.FacebookError;
 import com.viewpagerindicator.TabPageIndicator;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.ViewGroup;
 
 public class MainGalleryActivity extends SherlockFragmentActivity {
+	private FragmentStatePagerAdapter mFragmentAdapter;
+	protected static boolean update = false;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -72,18 +80,47 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.maingallery);
 
-		FragmentPagerAdapter adapter = new MegalikeAdapter(getSupportFragmentManager());
+		mFragmentAdapter = new MegalikeAdapter(getSupportFragmentManager());
 
 		ViewPager pager = (ViewPager) findViewById(R.id.maingallery_pager);
-		pager.setAdapter(adapter);
+		pager.setAdapter(mFragmentAdapter);
 
 		TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.maingallery_indicator);
 		indicator.setViewPager(pager);
+
+		configureSearch();
 	}
 
-	private static class MegalikeAdapter extends FragmentPagerAdapter {
+	private void configureSearch() {
+		((SearchManager) getSystemService(Context.SEARCH_SERVICE)).setOnDismissListener(new SearchManager.OnDismissListener() {
+
+			public void onDismiss() {
+				Log.d("TAG", "MainGalleryActivity - onDismiss()");
+				redrawUI();
+			}
+
+		});
+	}
+
+	private void redrawUI() {
+		Log.d("TAG", "MainGalleryActivity - redrawUI()");
+		update = true;
+		mFragmentAdapter.notifyDataSetChanged();
+		update = false;
+	}
+
+	private static class MegalikeAdapter extends FragmentStatePagerAdapter {
 		public MegalikeAdapter(FragmentManager fm) {
 			super(fm);
+		}
+
+		public int getItemPosition(Object object) {
+			Log.d("TAG", "MainGalleryActivity - update = " + update);
+			if (update) {
+				return POSITION_NONE;
+			} else {
+				return POSITION_UNCHANGED;
+			}
 		}
 
 		@Override
