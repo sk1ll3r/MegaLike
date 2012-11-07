@@ -20,9 +20,9 @@ import com.atlast.MegaLike.FacebookLogic.Link;
 import com.atlast.MegaLike.Lib.Extra;
 
 public final class StatusesTabFragment extends Fragment {
-	private Vector<Link> mLinks = new Vector<Link>();
-	private Vector<Spanned> mStatuses = new Vector<Spanned>();
-	private String currentlyDisplayedUID;
+
+	public static Vector<Link> mLinks = new Vector<Link>();
+	public static Vector<Spanned> mStatuses = new Vector<Spanned>();
 
 	public static StatusesTabFragment newInstance() {
 		StatusesTabFragment fragment = new StatusesTabFragment();
@@ -32,43 +32,24 @@ public final class StatusesTabFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		parseLinks();
-	}
-
-	@Override
-	public void onStop() {
-		super.onStop();
-	}
-
-	@Override
-	public void onPause() {
-		super.onStop();
-	}
-
-	private void parseLinks() {
-		if (!Extra.CURRENT_FRIEND_UID.equals(currentlyDisplayedUID)) {
-			mLinks.clear();
-			mStatuses.clear();
-			mLinks = Extra.mFacebookData.getLinks(Extra.CURRENT_FRIEND_UID);
-			Collections.sort(mLinks);
-			for (Link link : mLinks) {
-				if (link.url != null && link.linkTitle != null) {
-					String linkUrl = link.url.replaceAll("gdata.youtube.com/feeds/api/videos/", "www.youtube.com/watch?v=");
-					mStatuses.add(Html.fromHtml(link.status + "\n<a href=" + linkUrl + ">" + link.linkTitle + "</a>"));
-				} else
-					mStatuses.add(Html.fromHtml(link.status));
-			}
-			currentlyDisplayedUID = Extra.CURRENT_FRIEND_UID;
-		}
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		parseLinks();
+		parseLoadedLinks();
 		View view = inflater.inflate(R.layout.statusestabfragment, container, false);
 		ListView listView = (ListView) view.findViewById(R.id.statusestabfragment_listview);
 		listView.setAdapter(new StatusArrayAdapter(getActivity(), mStatuses.toArray(new Spanned[mStatuses.size()])));
 		return view;
+	}
+
+	private void parseLoadedLinks() {
+		mLinks.clear();
+		mStatuses.clear();
+		for (int i = 0; i < Extra.sLinks.size(); i++) {
+			mLinks.add(Extra.sLinks.get(i));
+			mStatuses.add(Extra.sStatuses.get(i));
+		}
 	}
 
 	public class StatusArrayAdapter extends ArrayAdapter<Spanned> {

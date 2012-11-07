@@ -1,6 +1,11 @@
 package com.atlast.MegaLike.Lib;
 
+import java.util.Vector;
+
+import android.text.Spanned;
+
 import com.atlast.MegaLike.R;
+import com.atlast.MegaLike.FacebookLogic.Link;
 import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.Facebook;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -20,4 +25,11 @@ public class Extra {
 	public static Facebook mFacebook;
     public static AsyncFacebookRunner mAsyncRunner;
     public static FacebookData mFacebookData;
+    
+    public static Vector<String> sBigImageUrls = new Vector<String>();
+	public static Vector<String> sThumbImageUrls = new Vector<String>();
+	public static Vector<Link> sLinks = new Vector<Link>();
+	public static Vector<Spanned> sStatuses = new Vector<Spanned>();
+	public static String sCurrentlyDisplayedLinksUID;
+	public static String sCurrentlyDisplayedImagesUID;
 }

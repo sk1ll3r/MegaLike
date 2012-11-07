@@ -29,9 +29,9 @@ public final class PhotosTabFragment extends Fragment {
 	private static final String KEY_CONTENT = "TestFragment:Content";
 	private int TAB_INDEX;
 	private ImageLoader imageLoader;
-	private Vector<String> bigImageUrls = new Vector<String>();
-	private Vector<String> thumbImageUrls = new Vector<String>();
-	private String currentlyDisplayedUID;
+	
+	private Vector<String> mBigImageUrls = new Vector<String>();
+	private Vector<String> mThumbImageUrls = new Vector<String>();
 
 	public static PhotosTabFragment newInstance(int tabIndex) {
 		PhotosTabFragment fragment = new PhotosTabFragment();
@@ -42,21 +42,6 @@ public final class PhotosTabFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		parseImageUrls();
-	}
-
-	private void parseImageUrls() {
-		if (!Extra.CURRENT_FRIEND_UID.equals(currentlyDisplayedUID)) {
-			bigImageUrls.clear();
-			thumbImageUrls.clear();
-			Vector<Photo> photos = Extra.mFacebookData.getPhotos(TAB_INDEX, Extra.CURRENT_FRIEND_UID);
-			Collections.sort(photos);
-			for (Photo photo : photos) {
-				bigImageUrls.add(photo.bigSrc);
-				thumbImageUrls.add(photo.thumbSrc);
-			}
-			currentlyDisplayedUID = Extra.CURRENT_FRIEND_UID;
-		}
 	}
 
 	@Override
@@ -82,7 +67,7 @@ public final class PhotosTabFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		parseImageUrls();
+		parseLoadedImages();
 		View view = inflater.inflate(R.layout.photostabfragment, container, false);
 		GridView gridView = (GridView) view.findViewById(R.id.photostabfragment_gridview);
 		gridView.setAdapter(new ImageAdapter());
@@ -94,16 +79,25 @@ public final class PhotosTabFragment extends Fragment {
 		return view;
 	}
 
+	private void parseLoadedImages() {
+		mBigImageUrls.clear();
+		mThumbImageUrls.clear();
+		for(int i = 0; i < Extra.sBigImageUrls.size(); i++){
+			mBigImageUrls.add(Extra.sBigImageUrls.get(i));
+			mThumbImageUrls.add(Extra.sThumbImageUrls.get(i));
+		}
+	}
+
 	private void startPhotoActivity(int position) {
 		Intent intent = new Intent(getActivity(), PhotoActivity.class);
-		intent.putExtra(Extra.IMAGES, bigImageUrls.toArray(new String[bigImageUrls.size()]));
+		intent.putExtra(Extra.IMAGES, mBigImageUrls.toArray(new String[mBigImageUrls.size()]));
 		intent.putExtra(Extra.IMAGE_POSITION, position);
 		startActivity(intent);
 	}
 
 	public class ImageAdapter extends BaseAdapter {
 		public int getCount() {
-			return bigImageUrls.size();
+			return mBigImageUrls.size();
 		}
 
 		public Object getItem(int position) {
@@ -121,7 +115,7 @@ public final class PhotosTabFragment extends Fragment {
 			} else {
 				imageView = (ImageView) convertView;
 			}
-			imageLoader.displayImage(bigImageUrls.get(position), imageView, new SimpleImageLoadingListener() {
+			imageLoader.displayImage(mBigImageUrls.get(position), imageView, new SimpleImageLoadingListener() {
 				@Override
 				public void onLoadingComplete(Bitmap loadedImage) {
 					if (getActivity() != null) {

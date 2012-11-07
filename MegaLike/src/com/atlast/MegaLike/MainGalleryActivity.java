@@ -3,10 +3,14 @@ package com.atlast.MegaLike;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Collections;
+import java.util.Vector;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.atlast.MegaLike.FacebookLogic.Link;
+import com.atlast.MegaLike.FacebookLogic.Photo;
 import com.atlast.MegaLike.Lib.Extra;
 import com.atlast.MegaLike.Lib.SessionManager;
 import com.facebook.android.AsyncFacebookRunner;
@@ -15,13 +19,17 @@ import com.facebook.android.FacebookError;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.viewpagerindicator.TabPageIndicator;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -94,6 +102,8 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 
 		TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.maingallery_indicator);
 		indicator.setViewPager(pager);
+		
+		new ParseFacebookDataTask().execute();
 	}
 
 	private void redrawUI() {
@@ -116,6 +126,31 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			String uid = intent.getDataString();
 			Extra.CURRENT_FRIEND_UID = uid;
+			new ParseFacebookDataTask().execute();
+		}
+	}
+
+	private class ParseFacebookDataTask extends AsyncTask<Void, Void, String> {
+		private ProgressDialog dialog = new ProgressDialog(MainGalleryActivity.this);
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog.setMessage("Downloading data from Facebook.");
+			dialog.show();
+		}
+
+		@Override
+		protected String doInBackground(Void... params) {
+			parseImageUrls();
+			parseLinks();
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (dialog.isShowing())
+				dialog.dismiss();
 			redrawUI();
 		}
 	}
@@ -123,7 +158,38 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == ACTIVITY_REQUEST_CODE)
-			redrawUI();
+			new ParseFacebookDataTask().execute();
+	}
+
+	private void parseImageUrls() {
+		if (!Extra.CURRENT_FRIEND_UID.equals(Extra.sCurrentlyDisplayedImagesUID)) {
+			Extra.sBigImageUrls.clear();
+			Extra.sThumbImageUrls.clear();
+			Vector<Photo> photos = Extra.mFacebookData.getPhotosAll(Extra.CURRENT_FRIEND_UID);
+			Collections.sort(photos);
+			for (Photo photo : photos) {
+				Extra.sBigImageUrls.add(photo.bigSrc);
+				Extra.sThumbImageUrls.add(photo.thumbSrc);
+			}
+			Extra.sCurrentlyDisplayedImagesUID = Extra.CURRENT_FRIEND_UID;
+		}
+	}
+
+	private void parseLinks() {
+		if (!Extra.CURRENT_FRIEND_UID.equals(Extra.sCurrentlyDisplayedLinksUID)) {
+			Extra.sLinks.clear();
+			Extra.sStatuses.clear();
+			Extra.sLinks = Extra.mFacebookData.getLinks(Extra.CURRENT_FRIEND_UID);
+			Collections.sort(Extra.sLinks);
+			for (Link link : Extra.sLinks) {
+				if (link.url != null && link.linkTitle != null) {
+					String linkUrl = link.url.replaceAll("gdata.youtube.com/feeds/api/videos/", "www.youtube.com/watch?v=");
+					Extra.sStatuses.add(Html.fromHtml(link.status + "\n<a href=" + linkUrl + ">" + link.linkTitle + "</a>"));
+				} else
+					Extra.sStatuses.add(Html.fromHtml(link.status));
+			}
+			Extra.sCurrentlyDisplayedLinksUID = Extra.CURRENT_FRIEND_UID;
+		}
 	}
 
 	private static class MegalikeAdapter extends FragmentStatePagerAdapter {
