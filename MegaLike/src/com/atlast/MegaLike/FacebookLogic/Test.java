@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import android.util.Log;
+
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
@@ -47,6 +49,7 @@ public class Test {
 	public static List<FQLPhoto> getAllUserPhotos(FacebookClient facebookClient, String uid) {		
 		if (uid == null || "me".equals(uid)) return new LinkedList<FQLPhoto>();
 		String query = "SELECT object_id, pid, src, src_big, link FROM photo WHERE aid IN (SELECT aid FROM album WHERE owner="+uid+")";
+		Log.d("TAG", "Test - getAllUserPhotos Executing: " + query);
 		System.out.println("Executing: "+query);
 		return facebookClient.executeQuery(query, FQLPhoto.class);		
 	}

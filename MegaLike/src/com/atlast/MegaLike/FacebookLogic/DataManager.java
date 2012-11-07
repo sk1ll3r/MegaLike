@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import android.util.Log;
+
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
@@ -80,6 +82,7 @@ public class DataManager {
 		}
 		//if (allPhotos.get(userId) != null) return allPhotos.get(userId);
 		List<FQLPhoto> ps = com.atlast.MegaLike.FacebookLogic.Test.getAllUserPhotos(facebookClient, userId);
+		Log.d("TAG", "DataManager - getAllUserPhotos parsed " + ps.size() + " images");
 		Vector<Photo> ret = new Vector<Photo>();
 		HashMap<String, Integer> oidToIndex = new HashMap<String, Integer>();
 		for (FQLPhoto p : ps) {
@@ -124,6 +127,7 @@ public class DataManager {
 			ret.add(photo);
 			//System.out.println("! "+photo.pid);
 		}
+		Log.d("TAG", "DataManager parsed " + ret.size() + " images");
 		return ret;
 	}
 	

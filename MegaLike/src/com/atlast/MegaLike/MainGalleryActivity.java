@@ -12,6 +12,7 @@ import com.atlast.MegaLike.Lib.SessionManager;
 import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.AsyncFacebookRunner.RequestListener;
 import com.facebook.android.FacebookError;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.viewpagerindicator.TabPageIndicator;
 
 import android.app.SearchManager;
@@ -26,6 +27,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class MainGalleryActivity extends SherlockFragmentActivity {
 	private static final int ACTIVITY_REQUEST_CODE = 0;
@@ -33,8 +35,8 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add("Search").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.add("About").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.add("Search").setIcon(R.drawable.ic_action_search).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.add("Clear cache").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		menu.add("Logout").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
@@ -43,9 +45,17 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getTitle().equals("Search"))
 			onSearchRequested();
+		if (item.getTitle().equals("Clear cache"))
+			clearCache();
 		if (item.getTitle().equals("Logout"))
 			logout();
 		return true;
+	}
+
+	private void clearCache() {
+		ImageLoader.getInstance().clearDiscCache();
+		ImageLoader.getInstance().clearMemoryCache();
+		Toast.makeText(this, "Cleared cache", Toast.LENGTH_SHORT).show();
 	}
 
 	private void logout() {
@@ -79,6 +89,7 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.maingallery);
+		Log.d("TAG", "MainGalleryActivity - onCreate() - access token: " + Extra.mFacebook.getAccessToken());
 
 		mFragmentAdapter = new MegalikeAdapter(getSupportFragmentManager());
 
