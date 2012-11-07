@@ -5,7 +5,6 @@ import java.util.Vector;
 
 import com.atlast.MegaLike.FacebookLogic.Photo;
 import com.atlast.MegaLike.Lib.Extra;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
@@ -14,7 +13,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +41,6 @@ public final class PhotosTabFragment extends Fragment {
 
 	@Override
 	public void onResume() {
-		Log.d("TAG", "PhotosTabFragment - onResume");
 		super.onResume();
 		parseImageUrls();
 	}
@@ -53,14 +50,12 @@ public final class PhotosTabFragment extends Fragment {
 			bigImageUrls.clear();
 			thumbImageUrls.clear();
 			Vector<Photo> photos = Extra.mFacebookData.getPhotos(TAB_INDEX, Extra.CURRENT_FRIEND_UID);
-			Log.d("TAG", "PhotosTabFragment - parseLinks() - photos.size() = " + photos.size());
 			Collections.sort(photos);
 			for (Photo photo : photos) {
 				bigImageUrls.add(photo.bigSrc);
 				thumbImageUrls.add(photo.thumbSrc);
 			}
 			currentlyDisplayedUID = Extra.CURRENT_FRIEND_UID;
-			Log.d("TAG", "PhotosTabFragment - parseImageUrls - parsed " + bigImageUrls.size() + " photos of " + Extra.CURRENT_FRIEND_UID);
 		}
 	}
 
@@ -87,7 +82,6 @@ public final class PhotosTabFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		Log.d("TAG", "PhotosTabFragment - onCreateView");
 		parseImageUrls();
 		View view = inflater.inflate(R.layout.photostabfragment, container, false);
 		GridView gridView = (GridView) view.findViewById(R.id.photostabfragment_gridview);

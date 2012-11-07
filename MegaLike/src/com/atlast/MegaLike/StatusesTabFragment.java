@@ -3,19 +3,16 @@ package com.atlast.MegaLike;
 import java.util.Collections;
 import java.util.Vector;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,7 +31,6 @@ public final class StatusesTabFragment extends Fragment {
 
 	@Override
 	public void onResume() {
-		Log.d("TAG", "StatusesTabFragment - onResume");
 		super.onResume();
 		parseLinks();
 	}
@@ -54,7 +50,6 @@ public final class StatusesTabFragment extends Fragment {
 			mLinks.clear();
 			mStatuses.clear();
 			mLinks = Extra.mFacebookData.getLinks(Extra.CURRENT_FRIEND_UID);
-			Log.d("TAG", "StatusesTabFragment - parseLinks() - mLinks.size() = " + mLinks.size());
 			Collections.sort(mLinks);
 			for (Link link : mLinks) {
 				if (link.url != null && link.linkTitle != null) {
@@ -64,13 +59,11 @@ public final class StatusesTabFragment extends Fragment {
 					mStatuses.add(Html.fromHtml(link.status));
 			}
 			currentlyDisplayedUID = Extra.CURRENT_FRIEND_UID;
-			Log.d("TAG", "StatusesTabFragment - parseLinks - parsed " + mStatuses.size() + " statuses of " + Extra.CURRENT_FRIEND_UID);
 		}
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		Log.d("TAG", "StatusesTabFragment - onCreateView");
 		parseLinks();
 		View view = inflater.inflate(R.layout.statusestabfragment, container, false);
 		ListView listView = (ListView) view.findViewById(R.id.statusestabfragment_listview);

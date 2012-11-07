@@ -1,7 +1,5 @@
 package com.atlast.MegaLike;
 
-import com.atlast.MegaLike.Lib.Extra;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
@@ -10,7 +8,6 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +85,5 @@ public class ImageFragment extends Fragment {
 	public void onStop() {
 		super.onStop();
 		imageLoader.stop();
-		Log.d("DEBUG", "ImageFragment.onStop()");
 	}
 }

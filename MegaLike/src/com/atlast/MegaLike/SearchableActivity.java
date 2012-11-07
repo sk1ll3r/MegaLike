@@ -7,7 +7,6 @@ import com.atlast.MegaLike.Lib.Extra;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -17,7 +16,6 @@ public class SearchableActivity extends SherlockListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		String uid = ((FQLFriend) getListAdapter().getItem(position)).uid;
 		Extra.CURRENT_FRIEND_UID = uid;
-		Log.d("TAG", "SearchableActivity - onListItemClick - Extra.CURRENT_FRIEND_UID = " + Extra.CURRENT_FRIEND_UID);
 		finish();
 	}
 
@@ -36,19 +34,16 @@ public class SearchableActivity extends SherlockListActivity {
 	private void handleIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			String query = intent.getStringExtra(SearchManager.QUERY);
-			Log.d("TAG", "SearchableActivity - handleIntent() - query = " + query);
 			doMySearch(query);
 		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			// Handle a suggestions click (because the suggestions all use ACTION_VIEW
 			String uid = intent.getDataString();
 			Extra.CURRENT_FRIEND_UID = uid;
-			Log.d("TAG", "SearchableActivity - handleIntent - Extra.CURRENT_FRIEND_UID = " + Extra.CURRENT_FRIEND_UID);
 			finish();
 		}
 	}
 
 	private void doMySearch(String query) {
-		Log.d("TAG", "SearchableActivity - doMySearch : Extra.mFacebookData.mFriends = " + Extra.mFacebookData.mFriends);
 		ArrayAdapter<FQLFriend> adapter = new ArrayAdapter<FQLFriend>(this, android.R.layout.simple_list_item_1, Extra.mFacebookData.getMatches(query));
 		setListAdapter(adapter);
 	}

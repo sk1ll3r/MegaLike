@@ -16,17 +16,12 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.viewpagerindicator.TabPageIndicator;
 
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 public class MainGalleryActivity extends SherlockFragmentActivity {
@@ -89,7 +84,6 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.maingallery);
-		Log.d("TAG", "MainGalleryActivity - onCreate() - access token: " + Extra.mFacebook.getAccessToken());
 
 		mFragmentAdapter = new MegalikeAdapter(getSupportFragmentManager());
 
@@ -101,7 +95,6 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 	}
 
 	private void redrawUI() {
-		Log.d("TAG", "MainGalleryActivity - redrawUI()");
 		mFragmentAdapter.notifyDataSetChanged();
 	}
 
@@ -112,19 +105,15 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 	}
 
 	private void handleIntent(Intent intent) {
-		Log.d("TAG", "MainGalleryActivity - handleIntent()");
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			String query = intent.getStringExtra(SearchManager.QUERY);
 			final Intent searchIntent = new Intent(getApplicationContext(), SearchableActivity.class);
 			searchIntent.putExtra(SearchManager.QUERY, query);
 			searchIntent.setAction(Intent.ACTION_SEARCH);
-			Log.d("TAG", "MainGalleryActivity - startActivityForResult()");
-			Log.d("TAG", "MainGalleryActivity - startActivityForResult() - query = " + query);
 			startActivityForResult(searchIntent, ACTIVITY_REQUEST_CODE);
 		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			String uid = intent.getDataString();
 			Extra.CURRENT_FRIEND_UID = uid;
-			Log.d("TAG", "MainGalleryActivity - handleIntent - Extra.CURRENT_FRIEND_UID = " + Extra.CURRENT_FRIEND_UID);
 			redrawUI();
 		}
 	}
@@ -141,7 +130,6 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 		}
 
 		public int getItemPosition(Object object) {
-			Log.d("TAG", "MainGalleryActivity - updating fragments");
 			return POSITION_NONE;
 		}
 
