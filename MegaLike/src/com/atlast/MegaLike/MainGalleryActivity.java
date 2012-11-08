@@ -136,7 +136,7 @@ public class MainGalleryActivity extends SherlockFragmentActivity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			dialog.setMessage("Downloading data from Facebook.");
+			dialog.setMessage("Downloading data from Facebook");
 			dialog.show();
 		}
 
